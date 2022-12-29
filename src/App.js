@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { useState, useCallback } from "react";
+
+//Components
+import Dashboard from "./components/Dashboard";
+import Start from "./components/Start";
+
+const stages = [
+  { id: 1, name: "start" },
+  { id: 2, name: "dashboard" },
+  { id: 3, name: "stopwatch" },
+];
 
 function App() {
+  const [appStage, setAppStage] = useState(stages[0].name);
+
+  const startManagement = useCallback(() => {
+    setAppStage(stages[1].name);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {appStage === "start" && <Start startManagement={startManagement} />}
+      {appStage === "dashboard" && <Dashboard />}
     </div>
   );
 }
