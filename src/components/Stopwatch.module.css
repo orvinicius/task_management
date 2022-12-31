@@ -1,0 +1,36 @@
+.stopwatch {
+  border-radius: 50%;
+  width: 251px;
+  height: 251px;
+  left: 61px;
+  top: 237px;
+  margin-top: 150px;
+  margin-bottom: 23px;
+  background: #7159c1;
+  border: 8px solid #ffffff;
+}
+
+.cronometer {
+  width: 193px;
+  height: 56px;
+  margin: 98px 28px 97px 30px;
+
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.icons {
+  width: 75px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.icons i {
+  font-size: 24px;
+  margin-bottom: 165px;
+}

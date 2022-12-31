@@ -1,21 +1,24 @@
 import { useState } from 'react'
 import styles from './Start.module.css'
 
-import Dashboard from './Dashboard'
 
 
-const Start = ({ startManagement }) => {
 
 
-    const [userName, setUserName] = useState("")
+const Start = ({ startManagement, setName }) => {
+
+    const [userName, setUserName] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         startManagement()
 
-        console.log(userName)
-    }
+        setName(userName)
+
+        //console.log(userName);
+    };
+
 
     return (
         <>
@@ -31,5 +34,6 @@ const Start = ({ startManagement }) => {
 
     )
 }
+
 
 export default Start
