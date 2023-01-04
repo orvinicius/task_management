@@ -18,6 +18,8 @@ function App() {
 
   const [userName, setUserName] = useState("");
 
+  const userTasks = [];
+
   const setName = (name) => {
     setUserName(name);
   };

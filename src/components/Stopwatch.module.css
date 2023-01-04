@@ -24,13 +24,18 @@
 }
 
 .icons {
-  width: 75px;
+  width: 100px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
 }
 
 .icons i {
-  font-size: 24px;
-  margin-bottom: 165px;
+  font-size: 36px;
+  margin-bottom: 100px;
+  cursor: pointer;
+}
+
+.icons i:hover {
+  color: #cbc4c4;
 }
