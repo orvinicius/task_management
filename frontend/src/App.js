@@ -1,5 +1,8 @@
 import "./App.css";
 
+// Router
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+
 import { useState, useCallback } from "react";
 
 //Components
