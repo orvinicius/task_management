@@ -1,7 +1,7 @@
 import "./App.css";
 
 // Router
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useState, useCallback } from "react";
 
@@ -10,16 +10,10 @@ import Dashboard from "./components/Dashboard";
 import Start from "./components/Start";
 import Stopwatch from "./components/Stopwatch";
 
-const stages = [
-  { id: 1, name: "start" },
-  { id: 2, name: "dashboard" },
-  { id: 3, name: "stopwatch" },
-];
-
 function App() {
-  const [appStage, setAppStage] = useState(stages[0].name);
-
   const [userName, setUserName] = useState("");
+
+  const navigate = useNavigate();
 
   const userTasks = [];
 
@@ -29,26 +23,32 @@ function App() {
   // console.log(userName);
 
   const startManagement = useCallback(() => {
-    setAppStage(stages[1].name);
-  }, []);
+    navigate("/dashboard");
+  }, [navigate]);
 
   const newTask = useCallback(() => {
-    setAppStage(stages[2].name);
-  }, []);
+    navigate("/timer");
+  }, [navigate]);
 
   const finishTask = useCallback(() => {
-    setAppStage(stages[1].name);
-  }, []);
+    navigate("/dashboard");
+  }, [navigate]);
 
   return (
     <div className="App">
-      {appStage === "start" && (
-        <Start startManagement={startManagement} setName={setName} />
-      )}
-      {appStage === "dashboard" && (
-        <Dashboard newTask={newTask} userName={userName} />
-      )}
-      {appStage === "stopwatch" && <Stopwatch finishTask={finishTask} />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Start startManagement={startManagement} setName={setName} />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={<Dashboard newTask={newTask} userName={userName} />}
+        />
+        <Route path="/timer" element={<Stopwatch finishTask={finishTask} />} />
+      </Routes>
     </div>
   );
 }

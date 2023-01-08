@@ -5,6 +5,8 @@ import styles from './Start.module.css'
 
 
 
+
+
 const Start = ({ startManagement, setName }) => {
 
     const [userName, setUserName] = useState("");
@@ -13,6 +15,7 @@ const Start = ({ startManagement, setName }) => {
         e.preventDefault();
 
         startManagement()
+
 
         setName(userName)
 
