@@ -2,11 +2,14 @@ import styles from './Stopwatch.module.css';
 
 import { useEffect, useState } from 'react';
 
+import tasksService from '../services/tasksService'
+
 const Stopwatch = (props) => {
 
     const [isActive, setIsActive] = useState(false);
     const [isPaused, setIsPaused] = useState(true);
     const [time, setTime] = useState(0);
+    const [taskName, setTaskName] = useState("")
 
     useEffect(() => {
         let interval = null;
@@ -32,10 +35,16 @@ const Stopwatch = (props) => {
         setIsPaused(!isPaused);
     };
 
-    const handleReset = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         setIsActive(false);
         setTime(0);
+        setTaskName(taskName);
+        console.log(time)
+
         props.finishTask()
+
+        tasksService.addTask(taskName)
     };
 
 
@@ -54,13 +63,20 @@ const Stopwatch = (props) => {
                     </span>
                 </div>
             </div>
-            <div className={styles.icons}>
-                <i className="bi bi-play-fill" onClick={handleStart}></i>
-                <i className="bi bi-pause-fill" onClick={handlePauseResume}></i>
-            </div>
-            <div>
-                <button onClick={handleReset}>Finish</button>
-            </div>
+            <label>
+                <div className={styles.icons}>
+                    <i className="bi bi-play-fill" onClick={handleStart}></i>
+                    <i className="bi bi-pause-fill" onClick={handlePauseResume}></i>
+                </div>
+            </label>
+            <form onSubmit={handleSubmit} >
+                <label>
+                    <input type="text" placeholder='Type the task name' onChange={(e) => setTaskName(e.target.value)} value={taskName} />
+                </label>
+                <div>
+                    <button>Finish</button>
+                </div>
+            </form>
 
         </>
     )

@@ -4,14 +4,19 @@ const UserTasks = require("./Controllers/UserTasks");
 
 const routes = new express.Router();
 
-routes.get("/tasks", UserTasks.index);
+// test route
+routes.get("/", (req, res) => {
+  res.send("API Working!");
+});
 
-routes.get("/tasks/:id", UserTasks.show);
+routes.get("/api/tasks", UserTasks.index);
 
-routes.post("/tasks", UserTasks.store);
+routes.get("/api/tasks/:id", UserTasks.show);
 
-routes.put("/tasks/:id", UserTasks.update);
+routes.post("/api/tasks", UserTasks.store);
 
-routes.delete("/tasks/:id", UserTasks.destroy);
+routes.put("/api/tasks/:id", UserTasks.update);
+
+routes.delete("/api/tasks/:id", UserTasks.destroy);
 
 module.exports = routes;

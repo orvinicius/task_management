@@ -17,6 +17,7 @@ button {
   font-weight: 700;
   font-size: 28px;
   border: 0;
+  margin-bottom: 20px;
 }
 
 button:hover {
