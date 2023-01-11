@@ -2,11 +2,6 @@ import { useState } from 'react'
 import styles from './Start.module.css'
 
 
-
-
-
-
-
 const Start = ({ startManagement, setName }) => {
 
     const [userName, setUserName] = useState("");

@@ -1,11 +1,11 @@
 import { api, requestConfig } from "../utils/config";
 
 //get the tasks
-const tasks = async (data) => {
+const getUserTasks = async (data) => {
   const config = requestConfig("GET", data);
 
   try {
-    const res = await fetch(api + "/api/tasks", config)
+    const res = await fetch(api + "/tasks", config)
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -20,7 +20,7 @@ const addTask = async (data) => {
   const config = requestConfig("POST", data);
 
   try {
-    const res = await fetch(api + "/api/tasks", config)
+    const res = await fetch(api + "/tasks", config)
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -31,7 +31,7 @@ const addTask = async (data) => {
 };
 
 const tasksService = {
-  tasks,
+  getUserTasks,
   addTask,
 };
 

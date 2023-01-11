@@ -44,7 +44,10 @@ const Stopwatch = (props) => {
 
         props.finishTask()
 
-        tasksService.addTask(taskName)
+        tasksService.addTask({
+            taskName: taskName,
+            taskTime: time
+        });
     };
 
 
@@ -53,13 +56,13 @@ const Stopwatch = (props) => {
             <div className={styles.stopwatch}>
                 <div className={styles.cronometer}>
                     <span>
-                        {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
+                        {("0" + Math.floor((time / 3600000) % 60)).slice(-2)}:
                     </span>
                     <span>
-                        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}.
+                        {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
                     </span>
                     <span >
-                        {("0" + ((time / 10) % 100)).slice(-2)}
+                        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
                     </span>
                 </div>
             </div>
@@ -71,7 +74,7 @@ const Stopwatch = (props) => {
             </label>
             <form onSubmit={handleSubmit} >
                 <label>
-                    <input type="text" placeholder='Type the task name' onChange={(e) => setTaskName(e.target.value)} value={taskName} />
+                    <input type="text" placeholder='Type the task name' required onChange={(e) => setTaskName(e.target.value)} value={taskName} />
                 </label>
                 <div>
                     <button>Finish</button>
