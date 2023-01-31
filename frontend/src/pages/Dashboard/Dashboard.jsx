@@ -1,7 +1,7 @@
 import styles from './Dashboard.module.css';
-import Stopwatch from './Stopwatch';
 
-import tasksService from '../services/tasksService'
+
+import tasksService from '../../services/tasksService'
 
 // hooks
 import { useEffect, useState } from 'react';
@@ -49,7 +49,7 @@ const Dashboard = ({ newTask, userName }) => {
 
 
     return (
-        <div>
+        <div className={styles.container}>
             <div>
                 <p className={styles.p}>Hello, {userName}!</p>
             </div>
@@ -59,7 +59,7 @@ const Dashboard = ({ newTask, userName }) => {
             </div>
             <div className={styles.tasks_count}>
                 <div className={styles.clock}>
-                    <img src={require('../assets/clock-icon.png')} alt="clock icon" />
+                    <img src={require('../../assets/clock-icon.png')} alt="clock icon" />
                     <span><p>
 
                         {("0" + Math.floor((tasksTime / 3600000) % 60)).slice(-2)}:
@@ -72,7 +72,7 @@ const Dashboard = ({ newTask, userName }) => {
                 </div>
                 <div className={styles.tasks}>
                     <span><p>{tasks.length}</p></span>
-                    <img src={require('../assets/task-icon.png')} alt="task icon" />
+                    <img src={require('../../assets/task-icon.png')} alt="task icon" />
                 </div>
             </div>
             <div className={styles.graphic_container}>

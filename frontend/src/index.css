@@ -6,11 +6,10 @@ body {
   font-family: "Roboto";
 }
 
-button {
+button,
+input[type="submit"] {
   height: 51px;
   width: 323px;
-  left: 28px;
-  top: 415px;
   border-radius: 25.5px;
   background: #7159c1;
   color: #fff;
@@ -18,9 +17,16 @@ button {
   font-size: 28px;
   border: 0;
   margin-bottom: 20px;
+  margin-top: 0;
 }
 
-button:hover {
+button:hover,
+input[type="submit"]:hover {
   background-color: #403074;
   cursor: pointer;
+}
+
+input[type="text"],
+input[type="password"] {
+  margin: 0;
 }

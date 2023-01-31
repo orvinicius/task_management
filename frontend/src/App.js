@@ -1,14 +1,19 @@
 import "./App.css";
 
+import { Navigate } from "react-router-dom";
+
+// Hooks
+import { useAuth } from "./hooks/useAuth";
+
 // Router
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useState, useCallback } from "react";
 
 //Components
-import Dashboard from "./components/Dashboard";
-import Start from "./components/Start";
-import Stopwatch from "./components/Stopwatch";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Stopwatch from "./pages/Stopwatch/Stopwatch";
+import Login from "./pages/Auth/Login";
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -38,10 +43,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route
-          path="/"
-          element={
-            <Start startManagement={startManagement} setName={setName} />
-          }
+          path="/login"
+          element={<Login startManagement={startManagement} />}
         />
         <Route
           path="/dashboard"

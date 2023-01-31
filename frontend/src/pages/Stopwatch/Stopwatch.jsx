@@ -2,7 +2,7 @@ import styles from './Stopwatch.module.css';
 
 import { useEffect, useState } from 'react';
 
-import tasksService from '../services/tasksService'
+import tasksService from '../../services/tasksService'
 
 const Stopwatch = (props) => {
 
