@@ -15,6 +15,12 @@
   text-align: center;
 }
 
+.login a,
+.register a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .input {
   display: flex;
   flex-direction: column;

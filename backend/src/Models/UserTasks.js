@@ -14,4 +14,6 @@ const UserTasks = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("UserTasks", UserTasks);
+const Tasks = mongoose.model("UserTasks", UserTasks);
+
+module.exports = Tasks;

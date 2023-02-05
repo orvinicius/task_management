@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const User = require("../models/User");
+const User = require("../Models/User");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -84,6 +84,7 @@ const login = async (req, res) => {
   res.status(200).json({
     _id: user._id,
     token: generateToken(user._id),
+    name: user.name,
   });
 };
 

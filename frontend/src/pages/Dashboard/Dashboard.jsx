@@ -1,6 +1,8 @@
 import styles from './Dashboard.module.css';
 
 
+
+
 import tasksService from '../../services/tasksService'
 
 // hooks
@@ -73,7 +75,7 @@ const Dashboard = ({ newTask, userName }) => {
     return (
         <div className={styles.container}>
             <div>
-                <p className={styles.p}>Hello,!</p>
+                <p className={styles.p}>Hello, {userAuth.name}!</p>
             </div>
 
             <div>

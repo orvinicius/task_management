@@ -15,7 +15,7 @@ import { login, reset } from "../../slices/authSlice";
 
 
 
-const Login = ({ startManagement }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
