@@ -5,8 +5,20 @@ import tasksService from '../../services/tasksService'
 
 // hooks
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
+// Redux
+import { getUserDetails } from "../../slices/userSlice";
 
 const Dashboard = ({ newTask, userName }) => {
+
+    const { id } = useParams();
+
+    const dispatch = useDispatch();
+
+    const { user, loading } = useSelector((state) => state.user);
+    const { user: userAuth } = useSelector((state) => state.auth);
 
     const [tasks, setTasks] = useState([]);
     const [tasksTime, setTasksTime] = useState([]);
@@ -47,11 +59,21 @@ const Dashboard = ({ newTask, userName }) => {
 
     }, []);
 
+    // Load user data
+    useEffect(() => {
+        dispatch(getUserDetails(id));
+    }, [dispatch, id]);
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+
+
 
     return (
         <div className={styles.container}>
             <div>
-                <p className={styles.p}>Hello, {userName}!</p>
+                <p className={styles.p}>Hello,!</p>
             </div>
 
             <div>

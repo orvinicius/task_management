@@ -1,12 +1,17 @@
 import styles from './Auth.module.css';
 
+import Message from '../../components/Message'
+
 
 // Components
 import { Link } from "react-router-dom";
 
 // Hooks
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux"
 
+//Redux 
+import { login, reset } from "../../slices/authSlice";
 
 
 
@@ -15,7 +20,9 @@ const Login = ({ startManagement }) => {
   const [password, setPassword] = useState("");
 
 
+  const dispatch = useDispatch();
 
+  const { loading, error } = useSelector((state) => state.auth);
 
 
   const handleSubmit = (e) => {
@@ -26,14 +33,19 @@ const Login = ({ startManagement }) => {
       password,
     };
 
-    startManagement()
     console.log(user);
+
+    dispatch(login(user));
   }
 
+  // Clean all auth states
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
 
   return (
-    <div >
+    <div className={styles.container} >
       <div className={styles.login}>
         <h2>Time Management</h2>
         <p className="subtitle">Faça o login para gerenciar suas tasks!</p>
@@ -52,7 +64,9 @@ const Login = ({ startManagement }) => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <input type="submit" value="Entrar" />
+          {!loading && <input type="submit" value="Entrar" />}
+          {loading && <input type="submit" disabled value="Aguarde..." />}
+          {error && <Message msg={error} type="error" />}
         </div>
 
       </form>

@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #231f37;
+  border-bottom: 1px solid #2d2a36;
+  padding: 0.1em 1em;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.navLinks li {
+  margin-right: 1em;
+  list-style: none;
+  text-decoration: none;
+}
+
+.navLinks li:hover {
+  cursor: pointer;
+}
+
+.navLinks span {
+  cursor: pointer;
+}
+
+.navLinks svg {
+  font-size: 1.5em;
+}
