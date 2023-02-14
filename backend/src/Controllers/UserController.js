@@ -50,8 +50,6 @@ const register = async (req, res) => {
   res.status(201).json({
     _id: newUser._id,
     token: generateToken(newUser._id),
-    name,
-    email,
   });
 };
 

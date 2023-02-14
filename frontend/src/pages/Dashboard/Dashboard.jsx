@@ -40,26 +40,26 @@ const Dashboard = ({ newTask, userName }) => {
 
     }, []);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const getTasksTime = async () => {
+    //     const getTasksTime = async () => {
 
-            const tasksTime = await tasksService.getUserTasks()
+    //         const tasksTime = await tasksService.getUserTasks()
 
-            //get tasks time
-            const taskTimesMap = tasksTime.map((time) => {
-                return time.taskTime
-            })
+    //         //get tasks time
+    //         const taskTimesMap = tasksTime.map((time) => {
+    //             return time.taskTime
+    //         })
 
-            let taskTimeSum = taskTimesMap.reduce((sum, taskTime) => sum + taskTime)
-            console.log(taskTimeSum);
+    //         let taskTimeSum = taskTimesMap.reduce((sum, taskTime) => sum + taskTime)
+    //         console.log(taskTimeSum);
 
-            setTasksTime(taskTimeSum);
-        }
+    //         setTasksTime(taskTimeSum);
+    //     }
 
-        getTasksTime();
+    //     getTasksTime();
 
-    }, []);
+    // }, []);
 
     // Load user data
     useEffect(() => {
