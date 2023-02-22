@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Stopwatch from "./pages/Stopwatch/Stopwatch";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Tasks from "./pages/Tasks/Tasks";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -76,8 +77,16 @@ function App() {
           <Route
             path="/timer"
             element={
-              auth ? <Stopwatch finishTask={finishTask} /> : <Navigate />
+              auth ? (
+                <Stopwatch finishTask={finishTask} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
+          />
+          <Route
+            path="/user/:id"
+            element={auth ? <Tasks /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>

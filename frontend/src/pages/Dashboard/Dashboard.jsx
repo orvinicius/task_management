@@ -1,8 +1,5 @@
 import styles from './Dashboard.module.css';
 
-
-
-
 import tasksService from '../../services/tasksService'
 
 // hooks
@@ -17,10 +14,11 @@ const Dashboard = ({ newTask, userName }) => {
 
     const { id } = useParams();
 
+
     const dispatch = useDispatch();
 
-    const { user, loading } = useSelector((state) => state.user);
-    const { user: userAuth } = useSelector((state) => state.auth);
+    const { loading } = useSelector((state) => state.user);
+    const { user } = useSelector((state) => state.auth);
 
     const [tasks, setTasks] = useState([]);
     const [tasksTime, setTasksTime] = useState([]);
@@ -75,7 +73,7 @@ const Dashboard = ({ newTask, userName }) => {
     return (
         <div className={styles.container}>
             <div>
-                <p className={styles.p}>Hello, {userAuth.name}!</p>
+                <p className={styles.p}>Hello, {user.name}!</p>
             </div>
 
             <div>

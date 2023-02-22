@@ -3,7 +3,13 @@ export const api = "http://localhost:3333/api";
 export const requestConfig = (method, data, token = null, task = null) => {
   let config;
 
-  if (method === "DELETE" || data === null) {
+  if (task) {
+    config = {
+      method,
+      body: data,
+      headers: {},
+    };
+  } else if (method === "DELETE" || data === null) {
     config = {
       method,
       headers: {},

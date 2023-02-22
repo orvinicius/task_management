@@ -6,7 +6,7 @@ const Task = require("../Models/UserTasks");
 
 // Insert a task with an user related to it
 const insertTask = async (req, res) => {
-  const { taskName, taskTime } = req.body;
+  const { taskTitle, taskTime } = req.body;
 
   const reqUser = req.user;
 
@@ -15,7 +15,7 @@ const insertTask = async (req, res) => {
   // Create a new task
   const newTask = await Tasks.create({
     userName: user.name,
-    taskName,
+    taskTitle,
     userId: user._id,
     taskTime,
   });

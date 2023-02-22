@@ -59,13 +59,13 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/tasks">
+                            <NavLink to="/timer">
                                 <Calendar />
                             </NavLink>
                         </li>
                         {user && (
                             <li>
-                                <NavLink to={`/users/${user._id}`}>
+                                <NavLink to={`/user/${user._id}`}>
                                     <List />
                                 </NavLink>
                             </li>
