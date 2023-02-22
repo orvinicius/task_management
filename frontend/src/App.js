@@ -58,11 +58,11 @@ function App() {
         <Routes>
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/" />}
+            element={!auth ? <Login /> : <Navigate to="/user/:id" />}
           />
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/" />}
+            element={!auth ? <Register /> : <Navigate to="/user/:id" />}
           />
           <Route
             path="/"

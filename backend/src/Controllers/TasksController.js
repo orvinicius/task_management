@@ -30,7 +30,7 @@ const insertTask = async (req, res) => {
   res.status(201).json(newTask);
 };
 
-// Remove atask from DB
+// Remove a task from DB
 const deleteTask = async (req, res) => {
   const { id } = req.params;
 
