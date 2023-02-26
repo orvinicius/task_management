@@ -41,7 +41,7 @@ const Navbar = () => {
 
     return (
         <nav className={styles.nav}>
-            <Link to="/">Time Management</Link>
+            <Link to="/tasks">Time Management</Link>
             {/* <form id="search-form" onSubmit={handleSearch}>
                 <BsSearch />
                 <input
@@ -54,7 +54,7 @@ const Navbar = () => {
                 {auth ? (
                     <>
                         <li>
-                            <NavLink to="/">
+                            <NavLink to="/tasks">
                                 <Home />
                             </NavLink>
                         </li>

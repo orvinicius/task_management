@@ -28,8 +28,6 @@ function App() {
 
   const navigate = useNavigate();
 
-  const userTasks = [];
-
   const setName = (name) => {
     setUserName(name);
   };
@@ -58,14 +56,14 @@ function App() {
         <Routes>
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/user/:id" />}
+            element={!auth ? <Login /> : <Navigate to="/tasks" />}
           />
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/user/:id" />}
+            element={!auth ? <Register /> : <Navigate to="/tasks" />}
           />
           <Route
-            path="/"
+            path="/dashboard"
             element={
               auth ? (
                 <Dashboard newTask={newTask} userName={userName} />
@@ -85,7 +83,7 @@ function App() {
             }
           />
           <Route
-            path="/user/:id"
+            path="/tasks"
             element={auth ? <Tasks /> : <Navigate to="/login" />}
           />
         </Routes>

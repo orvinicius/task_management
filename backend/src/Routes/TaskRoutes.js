@@ -24,7 +24,7 @@ routes.get("/user/:id", authGuard, getUserTasks);
 
 routes.get("/:id", authGuard, getTaskById);
 
-routes.post("/", authGuard, validate, insertTask);
+routes.post("/", authGuard, taskInsertValidation(), validate, insertTask);
 
 routes.put("/:id", taskUpdateValidation(), validate, updateTask);
 

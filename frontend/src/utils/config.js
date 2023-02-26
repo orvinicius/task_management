@@ -12,7 +12,9 @@ export const requestConfig = (method, data, token = null, task = null) => {
   } else if (method === "DELETE" || data === null) {
     config = {
       method,
-      headers: {},
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
   } else {
     config = {

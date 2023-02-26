@@ -16,8 +16,8 @@ const getUserTasks = async (id, token) => {
 };
 
 // insert a task
-const addTask = async (data) => {
-  const config = requestConfig("POST", data);
+const addTask = async (data, token) => {
+  const config = requestConfig("POST", data, token, true);
 
   try {
     const res = await fetch(api + "/tasks", config)

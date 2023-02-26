@@ -3,6 +3,7 @@ import styles from './Tasks.module.css';
 // components
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
+import { Eye, PenTool, Trash } from 'react-feather';
 
 // hooks
 import { useEffect, useState, useRef } from "react";
@@ -16,23 +17,27 @@ import {
     getUserTasks,
     insertTask,
     resetMessage,
-    updateTask,
-    taskSlice
+    updateTask
 } from "../../slices/taskSlice";
 
 const Tasks = () => {
-    const { id } = useParams();
+    const userLocalStorage = localStorage.getItem("user");
+    const localStorageId = JSON.parse(userLocalStorage)
+    const id = localStorageId._id
+
+
+
 
     const dispatch = useDispatch();
 
     const { user, loading } = useSelector((state) => state.user);
     const { user: userAuth } = useSelector((state) => state.auth);
     const {
-        tasks,
+        task: tasks,
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
-    } = useSelector((state) => state.tasks);
+    } = useSelector((state) => state.task);
 
     const [title, setTitle] = useState();
     const [task, setTask] = useState();
@@ -47,9 +52,8 @@ const Tasks = () => {
 
     // Load user data
     useEffect(() => {
-        dispatch(getUserDetails(id));
         dispatch(getUserTasks(id));
-    }, [dispatch, id]);
+    }, [dispatch]);
 
     // Reset component message
     function resetComponentMessage() {
@@ -132,93 +136,36 @@ const Tasks = () => {
 
     return (
         <div id="tasks">
-            <div className="profile-header">
-                {user.profileImage && (
-                    <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
-                )}
-                <div className="profile-description">
-                    <h2>{user.name}</h2>
-                    <p>{user.bio}</p>
-                </div>
-            </div>
-            {id === userAuth._id && (
-                <>
-                    <div className="new-photo" ref={newPhotoForm}>
-                        <h3>Compartilhe algum momento seu:</h3>
-                        <form onSubmit={submitHandle}>
-                            <label>
-                                <span>Título para a foto:</span>
-                                <input
-                                    type="text"
-                                    placeholder="Insira um título"
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    value={title || ""}
-                                />
-                            </label>
-                            <label>
-                                <span>Imagem:</span>
-                                <input type="file" onChange={handleFile} />
-                            </label>
-                            {!loadingPhoto && <input type="submit" value="Postar" />}
-                            {loadingPhoto && (
-                                <input type="submit" disabled value="Aguarde..." />
-                            )}
-                        </form>
-                    </div>
-                    <div className="edit-photo hide" ref={editPhotoForm}>
-                        <p>Editando:</p>
-                        {editImage && (
-                            <img src={`${uploads}/photos/${editImage}`} alt={editTitle} />
-                        )}
-                        <form onSubmit={handleUpdate}>
-                            <input
-                                type="text"
-                                onChange={(e) => setEditTitle(e.target.value)}
-                                value={editTitle || ""}
-                            />
-                            <input type="submit" value="Atualizar" />
-                            <button className="cancel-btn" onClick={handleCancelEdit}>
-                                Cancelar edição
-                            </button>
-                        </form>
-                    </div>
-                    {errorPhoto && <Message msg={errorPhoto} type="error" />}
-                    {messagePhoto && <Message msg={messagePhoto} type="success" />}
-                </>
-            )}
-            <div className="user-photos">
-                <h2>Fotos publicadas:</h2>
-                <div className="photos-container">
-                    {photos &&
-                        photos.map((photo) => (
-                            <div className="photo" key={photo._id}>
-                                {photo.image && (
-                                    <Link className="" to={`/photos/${photo._id}`}>
-                                        <img
-                                            src={`${uploads}/photos/${photo.image}`}
-                                            alt={photo.title}
-                                            dir={`/photos/${photo._id}`}
-                                        />
+
+            <div>
+                <h2>Tarefas:</h2>
+                <div>
+                    {task &&
+                        task.map((task) => (
+                            <div className="task" key={task._id}>
+                                {task && (
+                                    <Link className="" to={`/tasks/${task._id}`}>
+                                        <p>{task.title}</p>
                                     </Link>
                                 )}
                                 {id === userAuth._id ? (
                                     <div className="actions">
-                                        <Link to={`/photos/${photo._id}`}>
-                                            <BsFillEyeFill />
+                                        <Link to={`/tasks/${task._id}`}>
+                                            <Eye />
                                         </Link>
-                                        <BsPencilFill onClick={() => handleEdit(photo)} />
-                                        <BsXLg onClick={() => handleDelete(photo._id)} />
+                                        <PenTool onClick={() => handleEdit(task)} />
+                                        <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (
                                     <></>
                                 )}
                             </div>
                         ))}
-                    {photos.length === 0 && <p>Ainda não há fotos publicadas...</p>}
+                    {tasks.length === 0 && <p>Não há tarefas pendentes...</p>}
                 </div>
             </div>
         </div>
     );
 };
 
-export default Profile;
+export default Tasks;

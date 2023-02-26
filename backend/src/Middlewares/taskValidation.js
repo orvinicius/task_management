@@ -3,6 +3,7 @@ const { body } = require("express-validator");
 const taskInsertValidation = () => {
   return [
     body("title")
+      .optional()
       .not()
       .equals("undefined")
       .withMessage("O título é obrigatório.")
