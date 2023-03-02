@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { defineState } from 'redux-localstore'
+
 import userService from "../services/userService";
 
-const initialState = {
+const initialState = defineState({
     user: {},
     error: false,
     success: false,
     loading: false,
     message: null,
-};
+});
 
 // Get user details, for edit data
 export const profile = createAsyncThunk(
@@ -36,7 +38,7 @@ export const updateProfile = createAsyncThunk(
             return thunkAPI.rejectWithValue(data.errors[0]);
         }
 
-        console.log(data);
+
 
         return data;
     }

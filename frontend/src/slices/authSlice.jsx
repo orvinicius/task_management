@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { defineState } from 'redux-localstore'
+
 import authService from "../services/authService";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = {
+
+
+const initialState = defineState({
     user: user ? user : null,
     error: false,
     success: false,
     loading: false,
-};
+});
 
 // Register an user and sign in
 export const register = createAsyncThunk(

@@ -88,7 +88,7 @@ const login = async (req, res) => {
 
 // Update user
 const update = async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password, email } = req.body;
 
   const reqUser = req.user;
 
@@ -98,6 +98,10 @@ const update = async (req, res) => {
 
   if (name) {
     user.name = name;
+  }
+
+  if (email) {
+    user.email = email;
   }
 
   if (password) {

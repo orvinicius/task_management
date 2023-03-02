@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { defineState } from 'redux-localstore'
+
 import tasksService from "../services/tasksService";
 
-const initialState = {
+const initialState = defineState({
     tasks: [],
     task: {},
     error: false,
     success: false,
     loading: false,
     message: null,
-};
+});
 
 // Insert user task
 export const insertTask = createAsyncThunk(
@@ -114,7 +116,7 @@ export const taskSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-                state.task = action.payload;
+                state.tasks = action.payload;
             })
             .addCase(deleteTask.pending, (state) => {
                 state.loading = true;

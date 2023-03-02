@@ -3,7 +3,7 @@ import styles from './Tasks.module.css';
 // components
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
-import { Eye, PenTool, Trash } from 'react-feather';
+import { Eye, Edit, Trash } from 'react-feather';
 
 // hooks
 import { useEffect, useState, useRef } from "react";
@@ -33,7 +33,7 @@ const Tasks = () => {
     const { user, loading } = useSelector((state) => state.user);
     const { user: userAuth } = useSelector((state) => state.auth);
     const {
-        task: tasks,
+        tasks,
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
@@ -62,7 +62,7 @@ const Tasks = () => {
         }, 2000);
     }
 
-    // Publish a new photo
+    // Publish a new task
     const submitHandle = (e) => {
         e.preventDefault();
 
@@ -116,7 +116,7 @@ const Tasks = () => {
         hideOrShowForms();
     };
 
-    // Update photo title
+    // Update task title
     const handleUpdate = (e) => {
         e.preventDefault();
 
@@ -140,12 +140,12 @@ const Tasks = () => {
             <div>
                 <h2>Tarefas:</h2>
                 <div>
-                    {task &&
-                        task.map((task) => (
+                    {tasks &&
+                        tasks.map((task) => (
                             <div className="task" key={task._id}>
                                 {task && (
                                     <Link className="" to={`/tasks/${task._id}`}>
-                                        <p>{task.title}</p>
+                                        <p>{task.taskTitle}</p>
                                     </Link>
                                 )}
                                 {id === userAuth._id ? (
@@ -153,7 +153,7 @@ const Tasks = () => {
                                         <Link to={`/tasks/${task._id}`}>
                                             <Eye />
                                         </Link>
-                                        <PenTool onClick={() => handleEdit(task)} />
+                                        <Edit onClick={() => handleEdit(task)} />
                                         <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (

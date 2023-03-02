@@ -20,6 +20,7 @@ import Stopwatch from "./pages/Stopwatch/Stopwatch";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Tasks from "./pages/Tasks/Tasks";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -61,6 +62,10 @@ function App() {
           <Route
             path="/register"
             element={!auth ? <Register /> : <Navigate to="/tasks" />}
+          />
+          <Route
+            path="/profile"
+            element={auth ? <Profile /> : <Navigate to="/login" />}
           />
           <Route
             path="/dashboard"

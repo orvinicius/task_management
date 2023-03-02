@@ -10,64 +10,48 @@ import { useParams } from 'react-router';
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
 
-const Dashboard = ({ newTask, userName }) => {
+const Dashboard = () => {
 
-    const { id } = useParams();
+    const userLocalStorage = localStorage.getItem("user");
+    const localStorageId = JSON.parse(userLocalStorage)
+    const id = localStorageId._id
 
 
     const dispatch = useDispatch();
 
-    const { loading } = useSelector((state) => state.user);
-    const { user } = useSelector((state) => state.auth);
+    const { user, loading } = useSelector((state) => state.user);
+    const { user: userAuth } = useSelector((state) => state.auth);
+    const {
+        tasks,
+        loading: loadingTask,
+        error: errorTask,
+        message: messageTask,
+    } = useSelector((state) => state.task);
 
-    const [tasks, setTasks] = useState([]);
-    const [tasksTime, setTasksTime] = useState([]);
-
-
-
-    useEffect(() => {
-
-        const getTasks = async () => {
-
-            const userTasks = await tasksService.getUserTasks()
-
-            setTasks(userTasks);
-        }
-
-        getTasks();
-
-    }, []);
-
-    // useEffect(() => {
-
-    //     const getTasksTime = async () => {
-
-    //         const tasksTime = await tasksService.getUserTasks()
-
-    //         //get tasks time
-    //         const taskTimesMap = tasksTime.map((time) => {
-    //             return time.taskTime
-    //         })
-
-    //         let taskTimeSum = taskTimesMap.reduce((sum, taskTime) => sum + taskTime)
-    //         console.log(taskTimeSum);
-
-    //         setTasksTime(taskTimeSum);
-    //     }
-
-    //     getTasksTime();
-
-    // }, []);
 
     // Load user data
     useEffect(() => {
         dispatch(getUserDetails(id));
     }, [dispatch, id]);
 
+
+
+    //get tasks time
+    const tasksTime = tasks.map((time) => {
+        return time.taskTime
+
+    })
+    console.log(tasksTime)
+
+
+
+
+
+
+
     if (loading) {
         return <p>Carregando...</p>;
     }
-
 
 
     return (
@@ -84,11 +68,17 @@ const Dashboard = ({ newTask, userName }) => {
                     <img src={require('../../assets/clock-icon.png')} alt="clock icon" />
                     <span><p>
 
-                        {("0" + Math.floor((tasksTime / 3600000) % 60)).slice(-2)}:
+                        {("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
+                            return timeSum + time
+                        }) / 3600000) % 60)).slice(-2)}:
 
-                        {("0" + Math.floor((tasksTime / 60000) % 60)).slice(-2)}:
+                        {("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
+                            return timeSum + time
+                        }) / 60000) % 60)).slice(-2)}:
 
-                        {("0" + Math.floor((tasksTime / 1000) % 60)).slice(-2)}
+                        {("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
+                            return timeSum + time
+                        }) / 1000) % 60)).slice(-2)}
 
                     </p></span>
                 </div>
@@ -101,7 +91,7 @@ const Dashboard = ({ newTask, userName }) => {
                 <div className={styles.graphic}></div>
             </div>
             <div className={styles.newTask}>
-                <button onClick={newTask} >New Task</button>
+                <button>New Task</button>
             </div>
         </div>
     )

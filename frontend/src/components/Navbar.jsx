@@ -2,7 +2,7 @@ import styles from './Navbar.module.css';
 
 //Components
 import { NavLink, Link } from "react-router-dom";
-import { Home, Calendar, User, List } from 'react-feather'
+import { Home, PieChart, User, Clock } from 'react-feather'
 
 
 // Hooks
@@ -60,13 +60,13 @@ const Navbar = () => {
                         </li>
                         <li>
                             <NavLink to="/timer">
-                                <Calendar />
+                                <Clock />
                             </NavLink>
                         </li>
                         {user && (
                             <li>
-                                <NavLink to={`/user/${user._id}`}>
-                                    <List />
+                                <NavLink to="/dashboard">
+                                    <PieChart />
                                 </NavLink>
                             </li>
                         )}

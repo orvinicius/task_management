@@ -3,6 +3,9 @@ import authReducer from "./slices/authSlice";
 import userReducer from "./slices/userSlice";
 import taskReducer from "./slices/taskSlice";
 
+import storeSynchronize from 'redux-localstore'
+
+
 
 export const store = configureStore({
     reducer: {
@@ -11,3 +14,5 @@ export const store = configureStore({
         task: taskReducer
     },
 });
+
+storeSynchronize(store)
