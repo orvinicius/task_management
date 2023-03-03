@@ -17,13 +17,20 @@ input:focus {
   border: 0 0 0 0;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .stopwatch {
   border-radius: 50%;
   width: 251px;
   height: 251px;
   left: 61px;
   top: 237px;
-  margin-top: 150px;
+  margin-top: 100px;
   margin-bottom: 23px;
   background: #7159c1;
   border: 8px solid #ffffff;

@@ -4,9 +4,9 @@ body {
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   align-items: center;
+  justify-content: center;
 }
 
 .p {
@@ -17,6 +17,7 @@ body {
   width: 500px;
   left: 24px;
   top: 51px;
+  margin-bottom: 12px;
 }
 
 .tag {
@@ -31,6 +32,7 @@ body {
   left: 25px;
   top: 103px;
   border-radius: 4px;
+  margin-bottom: 6px;
 }
 
 .clock {
@@ -52,8 +54,8 @@ body {
 }
 .tasks_count {
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: space-between;
+
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -82,7 +84,10 @@ body {
   background: rgba(255, 255, 255, 0.11);
 }
 
-.newTask {
-  padding-top: 26px;
-  padding-bottom: 26px;
+.newTask button {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
 }

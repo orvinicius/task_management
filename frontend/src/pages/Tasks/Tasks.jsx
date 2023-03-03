@@ -135,21 +135,21 @@ const Tasks = () => {
     }
 
     return (
-        <div id="tasks">
+        <div className={styles.tasks}>
 
             <div>
                 <h2>Tarefas:</h2>
                 <div>
                     {tasks &&
                         tasks.map((task) => (
-                            <div className="task" key={task._id}>
+                            <div className={styles.task} key={task._id}>
                                 {task && (
-                                    <Link className="" to={`/tasks/${task._id}`}>
+                                    <Link className={styles.link} to={`/tasks/${task._id}`}>
                                         <p>{task.taskTitle}</p>
                                     </Link>
                                 )}
                                 {id === userAuth._id ? (
-                                    <div className="actions">
+                                    <div >
                                         <Link to={`/tasks/${task._id}`}>
                                             <Eye />
                                         </Link>

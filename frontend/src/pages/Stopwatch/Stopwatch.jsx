@@ -53,33 +53,32 @@ const Stopwatch = (props) => {
 
     return (
         <>
-            <div className={styles.stopwatch}>
-                <div className={styles.cronometer}>
-                    <span>
-                        {("0" + Math.floor((time / 3600000) % 60)).slice(-2)}:
-                    </span>
-                    <span>
-                        {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
-                    </span>
-                    <span >
-                        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
-                    </span>
+            <div className={styles.container}>
+                <div className={styles.stopwatch}>
+                    <div className={styles.cronometer}>
+                        <span>
+                            {("0" + Math.floor((time / 3600000) % 60)).slice(-2)}:
+                        </span>
+                        <span>
+                            {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
+                        </span>
+                        <span >
+                            {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <label>
-                <div className={styles.icons}>
-                    <i className="bi bi-play-fill" onClick={handleStart}></i>
-                    <i className="bi bi-pause-fill" onClick={handlePauseResume}></i>
-                </div>
-            </label>
-            <form onSubmit={handleSubmit} >
                 <label>
-                    <input type="text" placeholder='Type the task name' required onChange={(e) => setTaskName(e.target.value)} value={taskName} />
+                    <div className={styles.icons}>
+                        <i className="bi bi-play-fill" onClick={handleStart}></i>
+                        <i className="bi bi-pause-fill" onClick={handlePauseResume}></i>
+                    </div>
                 </label>
-                <div>
-                    <button>Finish</button>
-                </div>
-            </form>
+                <form onSubmit={handleSubmit} >
+                    <div>
+                        <button>Finish</button>
+                    </div>
+                </form>
+            </div>
 
         </>
     )

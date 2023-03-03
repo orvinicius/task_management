@@ -9,6 +9,7 @@ import { useParams } from 'react-router';
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
+import { getUserTasks } from "../../slices/taskSlice";
 
 const Dashboard = () => {
 
@@ -30,9 +31,13 @@ const Dashboard = () => {
 
 
     // Load user data
+    // useEffect(() => {
+    //     dispatch(getUserDetails(id));
+    // }, [dispatch]);
+
     useEffect(() => {
-        dispatch(getUserDetails(id));
-    }, [dispatch, id]);
+        dispatch(getUserTasks(id));
+    }, [dispatch]);
 
 
 
@@ -43,12 +48,6 @@ const Dashboard = () => {
     })
     console.log(tasksTime)
 
-
-
-
-
-
-
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -57,7 +56,7 @@ const Dashboard = () => {
     return (
         <div className={styles.container}>
             <div>
-                <p className={styles.p}>Hello, {user.name}!</p>
+                <p className={styles.p}>Hello, {userAuth.name}!</p>
             </div>
 
             <div>

@@ -1,0 +1,33 @@
+.container {
+  align-items: center;
+}
+.tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: space-evenly;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.task p {
+  color: #fff;
+  margin-right: 50px;
+}
+
+.task svg {
+  color: #fff;
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
+  font-weight: bold;
+}
