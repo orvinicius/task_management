@@ -66,7 +66,7 @@ const Dashboard = () => {
                 <div className={styles.clock}>
                     <img src={require('../../assets/clock-icon.png')} alt="clock icon" />
                     <span><p>
-
+                        {/* esperar o valor carregar */}
                         {("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
                             return timeSum + time
                         }) / 3600000) % 60)).slice(-2)}:
