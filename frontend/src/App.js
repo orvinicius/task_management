@@ -2,6 +2,10 @@ import "./App.css";
 
 import { Navigate } from "react-router-dom";
 
+// React Calendar
+
+import { Calendar } from "react-calendar";
+
 // Hooks
 import { useAuth } from "./hooks/useAuth";
 
@@ -53,6 +57,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      {/* <Calendar /> */}
       <div className="container">
         <Routes>
           <Route

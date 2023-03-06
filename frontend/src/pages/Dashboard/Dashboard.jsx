@@ -46,7 +46,6 @@ const Dashboard = () => {
         return time.taskTime
 
     })
-    console.log(tasksTime)
 
     if (loading) {
         return <p>Carregando...</p>;

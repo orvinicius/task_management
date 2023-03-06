@@ -15,6 +15,24 @@
   justify-content: space-evenly;
 }
 
+.tasks ul {
+  border: 0.5px solid rgb(95, 93, 98);
+  margin: 0;
+  width: 96vw;
+}
+
+.tasks ul li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tasks ul li span {
+  padding: 0.2em;
+}
+
 .task p {
   color: #fff;
   margin-right: 50px;

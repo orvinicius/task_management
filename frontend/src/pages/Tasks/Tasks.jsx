@@ -3,7 +3,9 @@ import styles from './Tasks.module.css';
 // components
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
-import { Eye, Edit, Trash } from 'react-feather';
+import { Eye, Edit, Trash, Calendar as CalendarIcon } from 'react-feather';
+import { Calendar } from "react-calendar";
+
 
 // hooks
 import { useEffect, useState, useRef } from "react";
@@ -45,6 +47,7 @@ const Tasks = () => {
     const [editId, setEditId] = useState();
     const [editTask, setEditTask] = useState();
     const [editTitle, setEditTitle] = useState();
+    const [showCalendar, setShowCalendar] = useState(false);
 
     // New form and edit form refs
     const newTaskForm = useRef();
@@ -53,7 +56,7 @@ const Tasks = () => {
     // Load user data
     useEffect(() => {
         dispatch(getUserTasks(id));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     // Reset component message
     function resetComponentMessage() {
@@ -134,8 +137,30 @@ const Tasks = () => {
         return <p>Carregando...</p>;
     }
 
+
+    const handleChange = () => {
+        setShowCalendar(false);
+    };
+
     return (
         <div className={styles.tasks}>
+            <ul>
+                <li>
+                    <span>Calendário</span>
+                    <span>
+                        <CalendarIcon
+                            onClick={() => setShowCalendar(true)}
+                        />
+                    </span>
+                </li>
+            </ul>
+            <div>
+                <Calendar
+                    className={showCalendar ? "" : "hide"}
+
+                    onChange={handleChange}
+                />
+            </div>
 
             <div>
                 <h2>Tarefas:</h2>
