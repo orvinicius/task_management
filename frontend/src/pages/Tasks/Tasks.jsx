@@ -139,25 +139,29 @@ const Tasks = () => {
 
 
     const handleChange = () => {
-        setShowCalendar(false);
-    };
+        if (showCalendar === false) {
+            setShowCalendar(true)
+        } else {
+            setShowCalendar(false)
+        }
+    }
 
     return (
         <div className={styles.tasks}>
             <ul>
                 <li>
-                    <span>Calendário</span>
-                    <span>
-                        <CalendarIcon
-                            onClick={() => setShowCalendar(true)}
-                        />
-                    </span>
+                    <button onClick={() => handleChange()}>
+                        <span>Calendário</span>
+                        <span>
+                            <CalendarIcon
+                            />
+                        </span>
+                    </button>
                 </li>
             </ul>
             <div>
                 <Calendar
                     className={showCalendar ? "" : "hide"}
-
                     onChange={handleChange}
                 />
             </div>

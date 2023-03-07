@@ -16,9 +16,9 @@
 }
 
 .tasks ul {
-  border: 0.5px solid rgb(95, 93, 98);
-  margin: 0;
-  width: 96vw;
+  padding: 0;
+  margin: 10px 0 0 0;
+  border-radius: 5px;
 }
 
 .tasks ul li {
@@ -31,6 +31,28 @@
 
 .tasks ul li span {
   padding: 0.2em;
+}
+
+.tasks ul li button,
+input[type="submit"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  background: #7159c1;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  border: 0;
+  margin: 5px 0 0 0;
+  text-transform: uppercase;
+}
+
+.tasks ul li button:hover {
+  background-color: #403074;
+  cursor: pointer;
 }
 
 .task p {
