@@ -12,11 +12,17 @@ const insertTask = async (req, res) => {
 
   const user = await User.findById(reqUser._id);
 
+  // Set the current date as the task date
+  const date = new Date();
+
+  const taskDate = new Date(date).toDateString();
+
   // Create a new task
   const newTask = await Tasks.create({
     userName: user.name,
     taskTitle,
     userId: user._id,
+    taskDate,
     taskTime,
   });
   // if task was created successfully, return data

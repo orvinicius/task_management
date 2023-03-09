@@ -71,3 +71,8 @@ input[type="submit"] {
   text-decoration: none;
   font-weight: bold;
 }
+
+.calendar {
+  position: absolute;
+  z-index: 1;
+}

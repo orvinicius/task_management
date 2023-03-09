@@ -159,7 +159,7 @@ const Tasks = () => {
                     </button>
                 </li>
             </ul>
-            <div>
+            <div className={styles.calendar}>
                 <Calendar
                     className={showCalendar ? "" : "hide"}
                     onChange={handleChange}

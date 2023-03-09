@@ -16,6 +16,9 @@ const UserTasks = new Schema({
   userId: {
     type: mongoose.ObjectId,
   },
+  taskDate: {
+    type: String,
+  },
 });
 
 const Task = mongoose.model("UserTasks", UserTasks);
