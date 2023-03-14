@@ -48,6 +48,7 @@ const Tasks = () => {
     const [editTask, setEditTask] = useState();
     const [editTitle, setEditTitle] = useState();
     const [showCalendar, setShowCalendar] = useState(false);
+    const [date, setDate] = useState(new Date());
 
     // New form and edit form refs
     const newTaskForm = useRef();
@@ -139,33 +140,45 @@ const Tasks = () => {
 
 
     const handleChange = () => {
+
         if (showCalendar === false) {
             setShowCalendar(true)
         } else {
             setShowCalendar(false)
         }
+
+
+        console.log(date)
+
     }
+
+
+
 
     return (
         <div className={styles.tasks}>
-            <ul>
-                <li>
-                    <button onClick={() => handleChange()}>
-                        <span>Calendário</span>
-                        <span>
-                            <CalendarIcon
-                            />
-                        </span>
-                    </button>
-                </li>
-            </ul>
-            <div className={styles.calendar}>
-                <Calendar
-                    className={showCalendar ? "" : "hide"}
-                    onChange={handleChange}
-                />
-            </div>
+            <div className={styles.container}>
+                <ul>
+                    <li>
+                        <button onClick={() => handleChange()}>
+                            <span>Calendário</span>
+                            <span>
+                                <CalendarIcon
+                                />
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+                <div className={styles.calendar}>
+                    <Calendar
+                        className={showCalendar ? "" : "hide"}
+                        onChange={setDate}
+                        defaultValue={date}
 
+                    />
+                </div>
+
+            </div>
             <div>
                 <h2>Tarefas:</h2>
                 <div>
@@ -178,7 +191,7 @@ const Tasks = () => {
                                     </Link>
                                 )}
                                 {id === userAuth._id ? (
-                                    <div >
+                                    <div className={styles.actions} >
                                         <Link to={`/tasks/${task._id}`}>
                                             <Eye />
                                         </Link>
@@ -195,6 +208,7 @@ const Tasks = () => {
             </div>
         </div>
     );
+
 };
 
 export default Tasks;
