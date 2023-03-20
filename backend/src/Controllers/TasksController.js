@@ -99,7 +99,7 @@ const getTaskById = async (req, res) => {
 const updateTask = async (req, res) => {
   const { id } = req.params;
 
-  const { title } = req.body;
+  const { taskTitle } = req.body;
 
   const reqUser = req.user;
 
@@ -119,8 +119,8 @@ const updateTask = async (req, res) => {
     return;
   }
 
-  if (title) {
-    task.taskTitle = title;
+  if (taskTitle) {
+    task.taskTitle = taskTitle;
   }
 
   await task.save();

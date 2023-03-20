@@ -25,17 +25,17 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Tasks from "./pages/Tasks/Tasks";
 import Profile from "./pages/Profile/Profile";
+import Modal from "./components/Modal";
+import TaskForm from "./components/TaskForm";
 
 function App() {
   const { auth, loading } = useAuth();
 
-  const [userName, setUserName] = useState("");
+  const [taskList, setTaskList] = useState([]);
+  const [taskUpdate, setTaskUpdate] = useState(null);
 
   const navigate = useNavigate();
 
-  const setName = (name) => {
-    setUserName(name);
-  };
   // console.log(userName);
 
   const startManagement = useCallback(() => {
@@ -53,6 +53,32 @@ function App() {
   if (loading) {
     return <p>Carregando...</p>;
   }
+
+  const hideOrShowModal = (display) => {
+    const modal = document.querySelector("#modal");
+    if (display) {
+      modal.classList.remove("hide");
+    } else {
+      modal.classList.add("hide");
+    }
+  };
+
+  const editTask = (task) => {
+    hideOrShowModal(true);
+    setTaskUpdate(task);
+  };
+
+  const updateTask = (taskTitle) => {
+    const updatedTask = { taskTitle };
+
+    const updatedItems = taskList.map((task) => {
+      return task.id === updatedTask.id ? updatedTask : task;
+    });
+
+    setTaskList(updatedItems);
+
+    hideOrShowModal(false);
+  };
 
   return (
     <div className="App">
@@ -74,13 +100,7 @@ function App() {
           />
           <Route
             path="/dashboard"
-            element={
-              auth ? (
-                <Dashboard newTask={newTask} userName={userName} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
+            element={auth ? <Dashboard /> : <Navigate to="/login" />}
           />
           <Route
             path="/timer"
@@ -94,7 +114,24 @@ function App() {
           />
           <Route
             path="/tasks"
-            element={auth ? <Tasks /> : <Navigate to="/login" />}
+            element={
+              auth ? (
+                <Tasks handleEdit={editTask} /> && (
+                  <Modal
+                    children={
+                      <TaskForm
+                        btnText="Editar Tarefa"
+                        taskList={taskList}
+                        task={taskUpdate}
+                        handleUpdate={updateTask}
+                      />
+                    }
+                  />
+                )
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
         </Routes>
       </div>

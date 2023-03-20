@@ -23,7 +23,7 @@ const Dashboard = () => {
     const { user, loading } = useSelector((state) => state.user);
     const { user: userAuth } = useSelector((state) => state.auth);
     const {
-        tasks,
+        tasks: tasks,
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
@@ -65,7 +65,7 @@ const Dashboard = () => {
                 <div className={styles.clock}>
                     <img src={require('../../assets/clock-icon.png')} alt="clock icon" />
                     <span><p>
-                        {/* esperar o valor carregar */}
+
                         {("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
                             return timeSum + time
                         }) / 3600000) % 60)).slice(-2)}:

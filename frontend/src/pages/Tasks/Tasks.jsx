@@ -42,16 +42,17 @@ const Tasks = () => {
     } = useSelector((state) => state.task);
 
     const [title, setTitle] = useState();
-    const [task, setTask] = useState();
+    const [taskTitle, setTaskTitle] = useState();
+
+    const [taskList, setTaskList] = useState([]);
+    const [taskUpdate, setTaskUpdate] = useState(null);
 
     const [editId, setEditId] = useState();
-    const [editTask, setEditTask] = useState();
     const [editTitle, setEditTitle] = useState();
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
 
-    // New form and edit form refs
-    const newTaskForm = useRef();
+    // Edit form ref
     const editTaskForm = useRef();
 
     // Load user data
@@ -71,8 +72,7 @@ const Tasks = () => {
         e.preventDefault();
 
         const taskData = {
-            title,
-            task,
+            taskTitle,
         };
 
         // build form data
@@ -100,45 +100,31 @@ const Tasks = () => {
     };
 
     // Show or hide forms
-    function hideOrShowForms() {
-        newTaskForm.current.classList.toggle("hide");
-        editTaskForm.current.classList.toggle("hide");
-    }
-
-    // Show edit form
-    const handleEdit = (task) => {
-        if (editTaskForm.current.classList.contains("hide")) {
-            hideOrShowForms();
+    const hideOrShowModal = (display) => {
+        const modal = document.querySelector("#modal");
+        if (display) {
+            modal.classList.remove("hide");
+        } else {
+            modal.classList.add("hide");
         }
-
-        setEditId(task._id);
-        setEditTitle(task.title);
     };
 
-    // Cancel editing
-    const handleCancelEdit = () => {
-        hideOrShowForms();
+    const editTask = (task) => {
+        hideOrShowModal(true);
+        setTaskUpdate(task);
     };
 
-    // Update task title
-    const handleUpdate = (e) => {
-        e.preventDefault();
+    const updateTask = (taskTitle) => {
+        const updatedTask = { taskTitle };
 
-        const taskData = {
-            title: editTitle,
-            id: editId,
-        };
+        const updatedItems = taskList.map((task) => {
+            return task.id === updatedTask.id ? updatedTask : task;
+        });
 
-        dispatch(updateTask(taskData));
+        setTaskList(updatedItems);
 
-        resetComponentMessage();
+        hideOrShowModal(false);
     };
-
-    if (loading) {
-        return <p>Carregando...</p>;
-    }
-
-
     const handleChange = () => {
 
         if (showCalendar === false) {
@@ -195,7 +181,7 @@ const Tasks = () => {
                                         <Link to={`/tasks/${task._id}`}>
                                             <Eye />
                                         </Link>
-                                        <Edit onClick={() => handleEdit(task)} />
+                                        <Edit onClick={() => editTask(task)} />
                                         <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (
