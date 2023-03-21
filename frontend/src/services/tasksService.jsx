@@ -1,8 +1,8 @@
 import { api, requestConfig } from "../utils/config";
 
 //get the tasks
-const getUserTasks = async (id, token) => {
-  const config = requestConfig("GET", null, token, null);
+const getUserTasks = async (data, id, token) => {
+  const config = requestConfig("GET", data, token);
 
   try {
     const res = await fetch(api + "/tasks/user/" + id, config)
