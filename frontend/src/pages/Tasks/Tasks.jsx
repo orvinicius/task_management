@@ -166,7 +166,9 @@ const Tasks = () => {
                 <div className={styles.calendar}>
                     <Calendar
                         className={showCalendar ? "" : "hide"}
-                        onChange={handleChange}
+                        onChange={setDate}
+                        defaultValue={date}
+
                     />
                 </div>
 
@@ -188,7 +190,9 @@ const Tasks = () => {
                                 ) : (
                                     <></>
                                 )}
-
+                                <div>
+                                    <Modal showModal={showModal} className={showModal ? "" : "hide"} />
+                                </div>
                             </div>
                         ))}
                     {tasks.length === 0 && <p>Não há tarefas pendentes...</p>}
