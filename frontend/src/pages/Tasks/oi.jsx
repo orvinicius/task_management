@@ -5,7 +5,6 @@ import Message from "../../components/Message";
 import { Link } from "react-router-dom";
 import { Eye, Edit, Trash, Calendar as CalendarIcon } from 'react-feather';
 import { Calendar } from "react-calendar";
-import Modal from "../../components/Modal"
 
 
 // hooks
@@ -54,8 +53,9 @@ const Tasks = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
 
-    const [showModal, setShowModal] = useState(false);
-
+    // New form and edit form refs
+    const newTaskForm = useRef();
+    const editTaskForm = useRef();
 
     // Load user data
     useEffect(() => {
@@ -102,18 +102,26 @@ const Tasks = () => {
         resetComponentMessage();
     };
 
-
+    // Show or hide forms
+    function hideOrShowForms() {
+        newTaskForm.current.classList.toggle("hide");
+        editTaskForm.current.classList.toggle("hide");
+    }
 
     // Show edit form
-    const handleEdit = () => {
-
-        if (showModal === false) {
-            setShowModal(true)
-        } else {
-            setShowModal(false)
+    const handleEdit = (task) => {
+        if (editTaskForm.current.classList.contains("hide")) {
+            hideOrShowForms();
         }
+
+        setEditId(task._id);
+        setEditTitle(task.title);
     };
 
+    // Cancel editing
+    const handleCancelEdit = () => {
+        hideOrShowForms();
+    };
 
     // Update task title
     const handleUpdate = (e) => {
@@ -135,60 +143,55 @@ const Tasks = () => {
 
 
     const handleChange = () => {
-
         if (showCalendar === false) {
             setShowCalendar(true)
         } else {
             setShowCalendar(false)
         }
-
-
-        console.log(date)
-
     }
-
 
     return (
         <div className={styles.tasks}>
-
-            <div className={styles.container}>
-                <ul>
-                    <li>
-                        <button onClick={() => handleChange()}>
-                            <span>Calendário</span>
-                            <span>
-                                <CalendarIcon
-                                />
-                            </span>
-                        </button>
-                    </li>
-                </ul>
-                <div className={styles.calendar}>
-                    <Calendar
-                        className={showCalendar ? "" : "hide"}
-                        onChange={handleChange}
-                    />
-                </div>
-
+            <ul>
+                <li>
+                    <button onClick={() => handleChange()}>
+                        <span>Calendário</span>
+                        <span>
+                            <CalendarIcon
+                            />
+                        </span>
+                    </button>
+                </li>
+            </ul>
+            <div className={styles.calendar}>
+                <Calendar
+                    className={showCalendar ? "" : "hide"}
+                    onChange={handleChange}
+                />
             </div>
+
             <div>
                 <h2>Tarefas:</h2>
                 <div>
-                    {tasks.tasks &&
+                    {tasks &&
                         tasks.map((task) => (
                             <div className={styles.task} key={task._id}>
                                 {task && (
-                                    <p>{task.taskTitle}</p>
+                                    <Link className={styles.link} to={`/tasks/${task._id}`}>
+                                        <p>{task.taskTitle}</p>
+                                    </Link>
                                 )}
                                 {id === userAuth._id ? (
                                     <div >
-                                        <Edit onClick={() => handleEdit()} />
+                                        <Link to={`/tasks/${task._id}`}>
+                                            <Eye />
+                                        </Link>
+                                        <Edit onClick={() => handleEdit(task)} />
                                         <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (
                                     <></>
                                 )}
-
                             </div>
                         ))}
                     {tasks.length === 0 && <p>Não há tarefas pendentes...</p>}

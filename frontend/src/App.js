@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 // React Calendar
 
-import { Calendar } from "react-calendar";
+// import { Calendar } from "react-calendar";
 
 // Hooks
 import { useAuth } from "./hooks/useAuth";
@@ -25,14 +25,9 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Tasks from "./pages/Tasks/Tasks";
 import Profile from "./pages/Profile/Profile";
-import Modal from "./components/Modal";
-import TaskForm from "./components/TaskForm";
 
 function App() {
   const { auth, loading } = useAuth();
-
-  const [taskList, setTaskList] = useState([]);
-  const [taskUpdate, setTaskUpdate] = useState(null);
 
   const navigate = useNavigate();
 
@@ -53,32 +48,6 @@ function App() {
   if (loading) {
     return <p>Carregando...</p>;
   }
-
-  const hideOrShowModal = (display) => {
-    const modal = document.querySelector("#modal");
-    if (display) {
-      modal.classList.remove("hide");
-    } else {
-      modal.classList.add("hide");
-    }
-  };
-
-  const editTask = (task) => {
-    hideOrShowModal(true);
-    setTaskUpdate(task);
-  };
-
-  const updateTask = (taskTitle) => {
-    const updatedTask = { taskTitle };
-
-    const updatedItems = taskList.map((task) => {
-      return task.id === updatedTask.id ? updatedTask : task;
-    });
-
-    setTaskList(updatedItems);
-
-    hideOrShowModal(false);
-  };
 
   return (
     <div className="App">
@@ -114,24 +83,7 @@ function App() {
           />
           <Route
             path="/tasks"
-            element={
-              auth ? (
-                <Tasks handleEdit={editTask} /> && (
-                  <Modal
-                    children={
-                      <TaskForm
-                        btnText="Editar Tarefa"
-                        taskList={taskList}
-                        task={taskUpdate}
-                        handleUpdate={updateTask}
-                      />
-                    }
-                  />
-                )
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
+            element={auth ? <Tasks /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>

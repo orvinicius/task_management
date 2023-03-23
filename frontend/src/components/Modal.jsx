@@ -1,18 +1,15 @@
 // CSS
 import styles from "./Modal.module.css";
 
+import TaskForm from "./TaskForm"
 
-const Modal = ({ children }) => {
-    const closeModal = (e) => {
-        const modal = document.querySelector("#modal");
-        modal.classList.add("hide");
-    };
+
+const Modal = () => {
     return (
         <div id="modal" className="hide">
-            <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.modal}>
                 <h1>Editar Tarefa</h1>
-                {children}
+                <TaskForm />
             </div>
         </div>
     );

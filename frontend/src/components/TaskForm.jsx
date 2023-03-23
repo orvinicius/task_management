@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // Redux
 import { updateTask, getUserTasks } from "../slices/taskSlice";
+import Modal from "./Modal";
 
 
 
@@ -69,19 +70,21 @@ const TaskForm = () => {
 
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.input_container}>
-                <label>Título: </label>
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Título da tarefa"
-                    onChange={(e) => setTaskTitle(e.target.value)}
-                    value={taskTitle}
-                />
-            </div>
-            <input type="submit" value="Editar Task" />
-        </form>
+        <div id="modal" className="hide">
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.input_container}>
+                    <label>Título: </label>
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Título da tarefa"
+                        onChange={(e) => setTaskTitle(e.target.value)}
+                        value={taskTitle}
+                    />
+                </div>
+                <input type="submit" value="Editar Task" />
+            </form>
+        </div>
     );
 };
 

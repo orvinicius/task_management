@@ -147,7 +147,7 @@ export const taskSlice = createSlice({
                 state.error = null;
                 state.tasks.map((task) => {
                     if (task._id === action.payload.task._id) {
-                        return (task.taskTitle = action.payload.task.taskTitle);
+                        return (task.title = action.payload.task.title);
                     }
 
                     return task;
