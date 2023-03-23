@@ -174,7 +174,7 @@ const Tasks = () => {
             <div>
                 <h2>Tarefas:</h2>
                 <div>
-                    {tasks.tasks &&
+                    {tasks &&
                         tasks.map((task) => (
                             <div className={styles.task} key={task._id}>
                                 {task && (
