@@ -28,6 +28,9 @@ const Tasks = () => {
     const localStorageId = JSON.parse(userLocalStorage)
     const id = localStorageId._id
 
+    const taskLocalStorage = localStorage.getItem("task");
+    console.log(taskLocalStorage)
+
 
 
 
@@ -57,10 +60,10 @@ const Tasks = () => {
     const [showModal, setShowModal] = useState(false);
 
 
-    // Load user data
-    useEffect(() => {
-        dispatch(getUserTasks(id));
-    }, [dispatch, id]);
+    // // Load user data
+    // useEffect(() => {
+    //     dispatch(getUserTasks());
+    // }, [dispatch, id]);
 
     // Reset component message
     function resetComponentMessage() {
@@ -191,7 +194,7 @@ const Tasks = () => {
                                     <></>
                                 )}
                                 <div>
-                                    <Modal showModal={showModal} className={showModal ? "" : "hide"} />
+                                    <Modal showModal={showModal} setShowModal={setShowModal} className={showModal ? "" : "hide"} />
                                 </div>
                             </div>
                         ))}

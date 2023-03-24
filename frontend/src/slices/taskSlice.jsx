@@ -41,6 +41,18 @@ export const getUserTasks = createAsyncThunk(
     }
 );
 
+// Get user tasks
+export const getTaskByID = createAsyncThunk(
+    "task/usertask",
+    async (id, thunkAPI) => {
+        const token = thunkAPI.getState().auth.user.token;
+
+        const data = await tasksService.getTaskByID(id, token);
+
+        return data;
+    }
+);
+
 // Delete a task
 export const deleteTask = createAsyncThunk(
     "task/delete",
@@ -118,6 +130,7 @@ export const taskSlice = createSlice({
                 state.error = null;
                 state.tasks = action.payload;
             })
+
             .addCase(deleteTask.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -159,6 +172,16 @@ export const taskSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.photo = null;
+            })
+            .addCase(getTaskByID.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getTaskByID.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.task = action.payload;
             })
 
     },
