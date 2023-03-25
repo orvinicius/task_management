@@ -80,7 +80,8 @@
 
 .close {
   margin: 0;
+  padding-left: 10px;
   display: flex;
-  flex-direction: column;
+  align-items: end;
   text-align: right;
 }

@@ -1,6 +1,13 @@
 import "./App.css";
 
-import { Navigate } from "react-router-dom";
+// Route
+import {
+  Navigate,
+  BrowserRouter,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 
 // React Calendar
 
@@ -8,9 +15,6 @@ import { Navigate } from "react-router-dom";
 
 // Hooks
 import { useAuth } from "./hooks/useAuth";
-
-// Router
-import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useState, useCallback } from "react";
 
@@ -29,65 +33,47 @@ import Profile from "./pages/Profile/Profile";
 function App() {
   const { auth, loading } = useAuth();
 
-  const navigate = useNavigate();
-
-  // console.log(userName);
-
-  const startManagement = useCallback(() => {
-    navigate("/dashboard");
-  }, [navigate]);
-
-  const newTask = useCallback(() => {
-    navigate("/timer");
-  }, [navigate]);
-
-  const finishTask = useCallback(() => {
-    navigate("/");
-  }, [navigate]);
-
   if (loading) {
     return <p>Carregando...</p>;
   }
 
   return (
     <div className="App">
-      <Navbar />
-      {/* <Calendar /> */}
-      <div className="container">
-        <Routes>
-          <Route
-            path="/login"
-            element={!auth ? <Login /> : <Navigate to="/tasks" />}
-          />
-          <Route
-            path="/register"
-            element={!auth ? <Register /> : <Navigate to="/tasks" />}
-          />
-          <Route
-            path="/profile"
-            element={auth ? <Profile /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/dashboard"
-            element={auth ? <Dashboard /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/timer"
-            element={
-              auth ? (
-                <Stopwatch finishTask={finishTask} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/tasks"
-            element={auth ? <Tasks /> : <Navigate to="/login" />}
-          />
-        </Routes>
-      </div>
-      <Footer />
+      <BrowserRouter>
+        <Navbar />
+        {/* <Calendar /> */}
+
+        <div className="container">
+          <Routes>
+            <Route
+              path="/login"
+              element={!auth ? <Login /> : <Navigate to="/tasks" />}
+            />
+            <Route
+              path="/register"
+              element={!auth ? <Register /> : <Navigate to="/tasks" />}
+            />
+            <Route
+              path="/profile"
+              element={auth ? <Profile /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/dashboard"
+              element={auth ? <Dashboard /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/timer"
+              element={auth ? <Stopwatch /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/tasks"
+              element={auth ? <Tasks /> : <Navigate to="/login" />}
+            />
+          </Routes>
+        </div>
+
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

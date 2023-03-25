@@ -19,9 +19,7 @@ const Modal = ({ showModal, setShowModal }) => {
 
 
 
-    const userLocalStorage = localStorage.getItem("user");
-    const localStorageId = JSON.parse(userLocalStorage)
-    const id = localStorageId._id
+
 
     const dispatch = useDispatch();
 
@@ -31,15 +29,12 @@ const Modal = ({ showModal, setShowModal }) => {
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
-    } = useSelector((state) => state.task);
+    } = useSelector((state) => state.tasks);
 
     const [taskTitle, setTaskTitle] = useState("");
     // const [difficulty, setDifficulty] = useState < number > (0);
 
-    // Load user tasks
-    useEffect(() => {
-        dispatch(getTaskByID(id));
-    }, [dispatch]);
+
 
     // fill user form
     useEffect(() => {

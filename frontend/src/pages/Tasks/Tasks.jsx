@@ -18,6 +18,7 @@ import { getUserDetails } from "../../slices/userSlice";
 import {
     deleteTask,
     getUserTasks,
+    getTaskByID,
     insertTask,
     resetMessage,
     updateTask
@@ -28,8 +29,15 @@ const Tasks = () => {
     const localStorageId = JSON.parse(userLocalStorage)
     const id = localStorageId._id
 
-    const taskLocalStorage = localStorage.getItem("task");
-    console.log(taskLocalStorage)
+
+    const taskLocalStorage = localStorage.getItem("tasks");
+    const localStorageTaskId = JSON.parse(taskLocalStorage)
+    const taskId = localStorageTaskId
+
+
+
+
+
 
 
 
@@ -43,10 +51,10 @@ const Tasks = () => {
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
-    } = useSelector((state) => state.task);
+    } = useSelector((state) => state.tasks);
 
     const [title, setTitle] = useState();
-    const [task, setTask] = useState();
+
 
     // Edit Task
     const [editId, setEditId] = useState();
@@ -60,10 +68,10 @@ const Tasks = () => {
     const [showModal, setShowModal] = useState(false);
 
 
-    // // Load user data
-    // useEffect(() => {
-    //     dispatch(getUserTasks());
-    // }, [dispatch, id]);
+    // Load user data
+    useEffect(() => {
+        dispatch(getUserTasks(id));
+    }, [dispatch, id]);
 
     // Reset component message
     function resetComponentMessage() {
@@ -78,7 +86,6 @@ const Tasks = () => {
 
         const taskData = {
             title,
-            task,
         };
 
         // build form data
@@ -108,13 +115,16 @@ const Tasks = () => {
 
 
     // Show edit form
-    const handleEdit = () => {
+    const handleEdit = (task) => {
 
         if (showModal === false) {
             setShowModal(true)
         } else {
             setShowModal(false)
         }
+
+        setEditId(task.id);
+        setEditTitle(task.title);
     };
 
 
@@ -149,6 +159,7 @@ const Tasks = () => {
         console.log(date)
 
     }
+
 
 
     return (
@@ -187,7 +198,7 @@ const Tasks = () => {
                                 )}
                                 {id === userAuth._id ? (
                                     <div >
-                                        <Edit onClick={() => handleEdit()} />
+                                        <Edit onClick={() => handleEdit(task)} />
                                         <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (

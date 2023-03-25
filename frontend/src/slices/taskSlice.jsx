@@ -41,7 +41,7 @@ export const getUserTasks = createAsyncThunk(
     }
 );
 
-// Get user tasks
+// Get task by Id
 export const getTaskByID = createAsyncThunk(
     "task/usertask",
     async (id, thunkAPI) => {

@@ -9,6 +9,9 @@ const getUserTasks = async (id, token) => {
       .then((res) => res.json())
       .catch((err) => err);
 
+    localStorage.setItem("tasks", JSON.stringify(res));
+
+
     return res;
   } catch (error) {
     console.log(error);
@@ -17,16 +20,12 @@ const getUserTasks = async (id, token) => {
 
 //get the task by Id
 const getTaskByID = async (id, token) => {
-  const config = requestConfig("GET", null, token, null);
+  const config = requestConfig("GET", null, token);
 
   try {
     const res = await fetch(api + "/tasks/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
-
-    if (res._id) {
-      localStorage.setItem("task", JSON.stringify(res));
-    }
 
     return res;
   } catch (error) {

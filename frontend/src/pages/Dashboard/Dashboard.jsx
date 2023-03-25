@@ -27,7 +27,7 @@ const Dashboard = () => {
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
-    } = useSelector((state) => state.task);
+    } = useSelector((state) => state.tasks);
 
 
     // Load user data

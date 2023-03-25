@@ -22,6 +22,8 @@ const register = async (data) => {
 // Logout a user
 const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("tasks");
+
 };
 
 // Sign in a user
@@ -35,6 +37,8 @@ const login = async (data) => {
 
         if (res._id) {
             localStorage.setItem("user", JSON.stringify(res));
+
+
         }
 
         return res;
