@@ -37,7 +37,11 @@ export const getUserTasks = createAsyncThunk(
 
         const data = await tasksService.getUserTasks(id, token);
 
+
+
         return data;
+
+
     }
 );
 
@@ -48,6 +52,8 @@ export const getTaskByID = createAsyncThunk(
         const token = thunkAPI.getState().auth.user.token;
 
         const data = await tasksService.getTaskByID(id, token);
+
+
 
         return data;
     }
@@ -129,6 +135,9 @@ export const taskSlice = createSlice({
                 state.success = true;
                 state.error = null;
                 state.tasks = action.payload;
+                state.task = state.tasks.map((task) => {
+                    return task
+                })
             })
 
             .addCase(deleteTask.pending, (state) => {
@@ -160,7 +169,7 @@ export const taskSlice = createSlice({
                 state.error = null;
                 state.tasks.map((task) => {
                     if (task._id === action.payload.task._id) {
-                        return (task.title = action.payload.task.title);
+                        return (task.title = action.payload.task.taskTitle);
                     }
 
                     return task;
@@ -181,7 +190,9 @@ export const taskSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-                state.task = action.payload;
+                state.task = state.tasks.filter((task) => {
+                    return task._id === action.payload.id;
+                });
             })
 
     },

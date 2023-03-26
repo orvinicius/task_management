@@ -11,17 +11,25 @@ import { X } from "react-feather";
 import { useSelector, useDispatch } from "react-redux";
 
 // Redux
-import { updateTask, getTaskByID } from "../slices/taskSlice";
+import { updateTask, getTaskByID, getUserTasks } from "../slices/taskSlice";
 
 
 
-const Modal = ({ showModal, setShowModal }) => {
+const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
 
+    const userLocalStorage = localStorage.getItem("user");
+    const localStorageId = JSON.parse(userLocalStorage)
+    const id = localStorageId._id
 
 
 
 
     const dispatch = useDispatch();
+
+    // Load user data
+    useEffect(() => {
+        dispatch(getUserTasks(id));
+    }, [dispatch, id]);
 
     const {
         tasks,
@@ -32,17 +40,21 @@ const Modal = ({ showModal, setShowModal }) => {
     } = useSelector((state) => state.tasks);
 
     const [taskTitle, setTaskTitle] = useState("");
-    // const [difficulty, setDifficulty] = useState < number > (0);
+
 
 
 
     // fill user form
     useEffect(() => {
-        if (task) {
-            setTaskTitle(task.taskTitle);
+        if (handleEdit) {
 
+            const title = tasks.find((task) =>
+                task._id === editId
+            )
+
+            setTaskTitle(title.taskTitle)
         }
-    }, [task]);
+    }, [handleEdit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,10 +69,10 @@ const Modal = ({ showModal, setShowModal }) => {
         const formData = new FormData();
 
         const taskFormData = Object.keys(taskData).forEach((key) =>
-            formData.append(key, taskData[key])
+            formData.append(key, taskData)
         );
 
-        formData.append("task", taskFormData);
+        formData.append("tasks", taskFormData);
 
         await dispatch(updateTask(formData));
 
@@ -71,9 +83,7 @@ const Modal = ({ showModal, setShowModal }) => {
     }
 
     const closeModal = () => {
-
         setShowModal(false)
-
     }
 
     return (

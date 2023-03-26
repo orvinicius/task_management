@@ -34,26 +34,20 @@ const Tasks = () => {
     const localStorageTaskId = JSON.parse(taskLocalStorage)
     const taskId = localStorageTaskId
 
-
-
-
-
-
-
-
-
     const dispatch = useDispatch();
 
     const { user, loading } = useSelector((state) => state.user);
     const { user: userAuth } = useSelector((state) => state.auth);
     const {
-        tasks,
+        tasks: tasks,
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
     } = useSelector((state) => state.tasks);
 
-    const [title, setTitle] = useState();
+    const [taskTitle, setTaskTitle] = useState();
+
+
 
 
     // Edit Task
@@ -85,7 +79,7 @@ const Tasks = () => {
         e.preventDefault();
 
         const taskData = {
-            title,
+            taskTitle,
         };
 
         // build form data
@@ -99,7 +93,7 @@ const Tasks = () => {
 
         dispatch(insertTask(formData));
 
-        setTitle("");
+        setTaskTitle("");
 
         resetComponentMessage();
     };
@@ -115,7 +109,7 @@ const Tasks = () => {
 
 
     // Show edit form
-    const handleEdit = (task) => {
+    const handleEdit = (id) => {
 
         if (showModal === false) {
             setShowModal(true)
@@ -123,9 +117,16 @@ const Tasks = () => {
             setShowModal(false)
         }
 
-        setEditId(task.id);
-        setEditTitle(task.title);
+        // console.log(id)
+
+        setEditId(id)
+        console.log(editId)
+
+
     };
+
+
+
 
 
     // Update task title
@@ -198,14 +199,14 @@ const Tasks = () => {
                                 )}
                                 {id === userAuth._id ? (
                                     <div >
-                                        <Edit onClick={() => handleEdit(task)} />
+                                        <Edit onClick={() => handleEdit(task._id)} />
                                         <Trash onClick={() => handleDelete(task._id)} />
                                     </div>
                                 ) : (
                                     <></>
                                 )}
                                 <div>
-                                    <Modal showModal={showModal} setShowModal={setShowModal} className={showModal ? "" : "hide"} />
+                                    <Modal showModal={showModal} setShowModal={setShowModal} editId={editId} handleEdit={handleEdit} className={showModal ? "" : "hide"} />
                                 </div>
                             </div>
                         ))}
