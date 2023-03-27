@@ -167,7 +167,13 @@ export const taskSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-                state.task = action.payload.taskTitle
+                state.tasks.map((task) => {
+                    if (task._id === action.payload.task._id) {
+                        return (task.taskData.title = action.payload.task.taskData.title);
+                    }
+
+                    return task.taskData.title;
+                });
 
 
                 state.message = action.payload.message;
