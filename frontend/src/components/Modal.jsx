@@ -5,7 +5,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 
 import { X } from "react-feather";
 
-
+import Message from "./Message";
 
 // Hooks
 import { useSelector, useDispatch } from "react-redux";
@@ -17,9 +17,12 @@ import { updateTask, getTaskByID, getUserTasks } from "../slices/taskSlice";
 
 const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
 
+
     const userLocalStorage = localStorage.getItem("user");
     const localStorageId = JSON.parse(userLocalStorage)
     const id = localStorageId._id
+
+
 
 
 
@@ -34,12 +37,13 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
     const {
         tasks,
         task,
-        loading: loadingTask,
-        error: errorTask,
-        message: messageTask,
+        loading,
+        error,
+        message,
     } = useSelector((state) => state.tasks);
 
-    const [taskTitle, setTaskTitle] = useState("");
+    const [taskTitle, setTaskTitle] = useState('');
+    const [taskId, setTaskId] = useState()
 
 
 
@@ -48,11 +52,13 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
     useEffect(() => {
         if (handleEdit) {
 
-            const title = tasks.find((task) =>
+            const title = tasks?.find((task) =>
                 task._id === editId
             )
 
-            setTaskTitle(title.taskTitle)
+            setTaskTitle(title?.taskTitle)
+            setTaskId(title?._id)
+
         }
     }, [handleEdit]);
 
@@ -61,20 +67,14 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
 
         // Gather user data from states
         const taskData = {
-            taskTitle,
+            title: taskTitle,
+            taskId: editId
+
         };
 
 
-        // build form data
-        const formData = new FormData();
 
-        const taskFormData = Object.keys(taskData).forEach((key) =>
-            formData.append(key, taskData)
-        );
-
-        formData.append("tasks", taskFormData);
-
-        await dispatch(updateTask(formData));
+        await dispatch(updateTask(taskData));
 
 
     };
@@ -103,10 +103,12 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
                                 name="title"
                                 placeholder="Título da tarefa"
                                 onChange={(e) => setTaskTitle(e.target.value)}
-                                value={taskTitle}
+                                value={taskTitle || ""}
                             />
                         </div>
-                        <input type="submit" value="Editar Task" />
+                        {!loading && <input type="submit" value="Editar Task" />}
+                        {loading && <input type="submit" disabled value="Aguarde..." />}
+
                     </form>
                 </div>
             </div>

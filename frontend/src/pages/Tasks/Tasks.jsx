@@ -74,29 +74,6 @@ const Tasks = () => {
         }, 2000);
     }
 
-    // Publish a new task
-    const submitHandle = (e) => {
-        e.preventDefault();
-
-        const taskData = {
-            taskTitle,
-        };
-
-        // build form data
-        const formData = new FormData();
-
-        const taskFormData = Object.keys(taskData).forEach((key) =>
-            formData.append(key, taskData[key])
-        );
-
-        formData.append("task", taskFormData);
-
-        dispatch(insertTask(formData));
-
-        setTaskTitle("");
-
-        resetComponentMessage();
-    };
 
 
     // Exclude a task

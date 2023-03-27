@@ -65,7 +65,7 @@ const deleteTask = async (id, token) => {
 
 // Update a task
 const updateTask = async (data, id, token) => {
-  const config = requestConfig("PUT", data, token);
+  const config = requestConfig("PUT", data, token, true);
 
   try {
     const res = await fetch(api + "/tasks/" + id, config)

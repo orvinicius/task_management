@@ -83,8 +83,8 @@ export const updateTask = createAsyncThunk(
         const token = thunkAPI.getState().auth.user.token;
 
         const data = await tasksService.updateTask(
-            { title: taskData.title },
-            taskData.id,
+            taskData.title,
+            taskData.taskId,
             token
         );
 
@@ -167,20 +167,15 @@ export const taskSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-                state.tasks.map((task) => {
-                    if (task._id === action.payload.task._id) {
-                        return (task.title = action.payload.task.taskTitle);
-                    }
+                state.task = action.payload.taskTitle
 
-                    return task;
-                });
 
                 state.message = action.payload.message;
             })
             .addCase(updateTask.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.photo = null;
+                state.task = null;
             })
             .addCase(getTaskByID.pending, (state) => {
                 state.loading = true;
