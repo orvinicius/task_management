@@ -18,6 +18,7 @@ const Profile = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [_id, setId] = useState();
 
     // Load user data
     useEffect(() => {
@@ -29,6 +30,7 @@ const Profile = () => {
         if (user) {
             setName(user.name);
             setEmail(user.email);
+            setId(user._id)
         }
     }, [user]);
 
@@ -36,23 +38,27 @@ const Profile = () => {
         e.preventDefault();
 
         // Gather user data from states
-        const userData = {
+        const user = {
             name,
         };
 
-        if (email) {
-            userData.email = email;
-        }
 
-        if (password) {
-            userData.password = password;
-        }
+        user.email = email;
+
+
+
+        user.password = password;
+
+
+
+        user._id = _id
+
 
         // build form data
         const formData = new FormData();
 
-        const userFormData = Object.keys(userData).forEach((key) =>
-            formData.append(key, userData[key])
+        const userFormData = Object.keys(user).forEach((key) =>
+            formData.append(key, user[key])
         );
 
         formData.append("user", userFormData);
@@ -75,7 +81,10 @@ const Profile = () => {
                     value={name || ""}
                 />
                 <label>
-                    <input type="email" placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} value={email || ""} />
+                    <input type="email" placeholder="E-mail" onChange={(e) => {
+                        setEmail(e.target.value)
+                        console.log(email)
+                    }} value={email || ""} />
                 </label>
                 <label>
                     <span>Quer alterar sua senha?</span>

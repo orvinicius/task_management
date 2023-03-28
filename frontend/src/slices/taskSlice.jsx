@@ -83,9 +83,9 @@ export const updateTask = createAsyncThunk(
         const token = thunkAPI.getState().auth.user.token;
 
         const data = await tasksService.updateTask(
-            taskData.title,
-            taskData.taskId,
-            token
+            { taskTitle: taskData.title },
+            taskData.id,
+            token,
         );
 
         // Check for errors
@@ -169,10 +169,10 @@ export const taskSlice = createSlice({
                 state.error = null;
                 state.tasks.map((task) => {
                     if (task._id === action.payload.task._id) {
-                        return (task.taskData.title = action.payload.task.taskData.title);
+                        return (task.taskTitle = action.payload.task.taskTitle);
                     }
 
-                    return task.taskData.title;
+                    return task;
                 });
 
 

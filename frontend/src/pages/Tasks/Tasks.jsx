@@ -3,7 +3,7 @@ import styles from './Tasks.module.css';
 // components
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
-import { Eye, Edit, Trash, Calendar as CalendarIcon } from 'react-feather';
+import { Eye, Edit, Trash, Calendar as CalendarIcon, X } from 'react-feather';
 import { Calendar } from "react-calendar";
 import Modal from "../../components/Modal"
 
@@ -45,15 +45,17 @@ const Tasks = () => {
         message: messageTask,
     } = useSelector((state) => state.tasks);
 
-    const [taskTitle, setTaskTitle] = useState();
+    const [title, setTitle] = useState();
+    const [taskTitleId, setTaskTitleId] = useState()
 
 
+    // New form and edit form refs
+    const newTaskForm = useRef();
+    const editTaskForm = useRef();
 
 
     // Edit Task
     const [editId, setEditId] = useState();
-    const [editTask, setEditTask] = useState();
-    const [editTitle, setEditTitle] = useState();
 
     // Calendar
     const [showCalendar, setShowCalendar] = useState(false);
@@ -74,7 +76,20 @@ const Tasks = () => {
         }, 2000);
     }
 
+    const titleTask = tasks?.find((task) =>
+        task._id === editId
+    )
 
+    // fill user form
+    useEffect(() => {
+        if (handleEdit) {
+            setEditId(titleTask?._id)
+            console.log(editId)
+
+            setTitle(titleTask?.taskTitle)
+            setTaskTitleId(titleTask?._id)
+        }
+    }, [editId, tasks]);
 
     // Exclude a task
     const handleDelete = (id) => {
@@ -88,6 +103,7 @@ const Tasks = () => {
     // Show edit form
     const handleEdit = (id) => {
 
+
         if (showModal === false) {
             setShowModal(true)
         } else {
@@ -97,27 +113,30 @@ const Tasks = () => {
         // console.log(id)
 
         setEditId(id)
-        console.log(editId)
+
+
 
 
     };
 
-
-
-
+    // Cancel editing
+    const handleCancelEdit = () => {
+        setShowModal(false)
+    };
 
     // Update task title
     const handleUpdate = (e) => {
         e.preventDefault();
 
         const taskData = {
-            title: editTitle,
-            id: editId,
+            title: title,
+            id: titleTask?._id,
         };
 
         dispatch(updateTask(taskData));
 
         resetComponentMessage();
+        setShowModal(false);
     };
 
     if (loading) {
@@ -182,9 +201,35 @@ const Tasks = () => {
                                 ) : (
                                     <></>
                                 )}
-                                <div>
-                                    <Modal showModal={showModal} setShowModal={setShowModal} editId={editId} handleEdit={handleEdit} className={showModal ? "" : "hide"} />
-                                </div>
+                                {showModal && <div id="modal" className="hide">
+                                    <div className={styles.fade}></div>
+                                    <div className={styles.modal}>
+                                        <div>
+                                            <X className={styles.close} onClick={handleCancelEdit} />
+                                        </div>
+                                        <h1>Editar Tarefa</h1>
+                                        <div id="modal" className="hide">
+                                            <form onSubmit={handleUpdate} className={styles.form}>
+                                                <div className={styles.input_container}>
+                                                    <label>Título: </label>
+                                                    <input
+                                                        type="text"
+                                                        name="title"
+                                                        placeholder="Título da tarefa"
+                                                        onChange={(e) => {
+                                                            setTitle(e.target.value)
+                                                        }}
+                                                        value={title || ""}
+                                                    />
+                                                </div>
+                                                {!loading && <input type="submit" value="Editar Task" />}
+                                                {loading && <input type="submit" disabled value="Aguarde..." />}
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>}
                             </div>
                         ))}
                     {tasks.length === 0 && <p>Não há tarefas pendentes...</p>}

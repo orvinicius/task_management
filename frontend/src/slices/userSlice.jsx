@@ -31,6 +31,8 @@ export const updateProfile = createAsyncThunk(
     async (user, thunkAPI) => {
         const token = thunkAPI.getState().auth.user.token;
 
+
+
         const data = await userService.updateProfile(user, token);
 
         // Check for errors

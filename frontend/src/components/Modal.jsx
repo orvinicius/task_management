@@ -62,7 +62,7 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
         }
     }, [handleEdit]);
 
-    const handleSubmit = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
         // Gather user data from states
@@ -95,14 +95,16 @@ const Modal = ({ showModal, setShowModal, editId, handleEdit }) => {
                 </div>
                 <h1>Editar Tarefa</h1>
                 <div id="modal" className="hide">
-                    <form onSubmit={handleSubmit} className={styles.form}>
+                    <form onSubmit={handleUpdate} className={styles.form}>
                         <div className={styles.input_container}>
                             <label>Título: </label>
                             <input
                                 type="text"
                                 name="title"
                                 placeholder="Título da tarefa"
-                                onChange={(e) => setTaskTitle(e.target.value)}
+                                onChange={(e) => {
+                                    setTaskTitle(e.target.value)
+                                }}
                                 value={taskTitle || ""}
                             />
                         </div>

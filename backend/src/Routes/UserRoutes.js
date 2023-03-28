@@ -24,7 +24,7 @@ const routes = new express.Router();
 routes.post("/register", userCreateValidation(), validate, register);
 routes.get("/profile", authGuard, getCurrentUser);
 routes.post("/login", loginValidation(), validate, login);
-routes.put("/:id", authGuard, userUpdateValidation(), validate, update);
+routes.put("/", authGuard, userUpdateValidation(), validate, update);
 routes.get("/:id", getUserById);
 
 module.exports = routes;
