@@ -1,25 +1,19 @@
 import styles from './Tasks.module.css';
 
 // components
-import Message from "../../components/Message";
-import { Link } from "react-router-dom";
-import { Eye, Edit, Trash, Calendar as CalendarIcon, X } from 'react-feather';
+import { Edit, Trash, Calendar as CalendarIcon, X } from 'react-feather';
 import { Calendar } from "react-calendar";
-import Modal from "../../components/Modal"
+
 
 
 // hooks
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 
 // Redux
-import { getUserDetails } from "../../slices/userSlice";
 import {
     deleteTask,
     getUserTasks,
-    getTaskByID,
-    insertTask,
     resetMessage,
     updateTask
 } from "../../slices/taskSlice";
@@ -30,28 +24,16 @@ const Tasks = () => {
     const id = localStorageId._id
 
 
-    const taskLocalStorage = localStorage.getItem("tasks");
-    const localStorageTaskId = JSON.parse(taskLocalStorage)
-    const taskId = localStorageTaskId
+
 
     const dispatch = useDispatch();
 
-    const { user, loading } = useSelector((state) => state.user);
+    const { loading } = useSelector((state) => state.user);
     const { user: userAuth } = useSelector((state) => state.auth);
-    const {
-        tasks: tasks,
-        loading: loadingTask,
-        error: errorTask,
-        message: messageTask,
-    } = useSelector((state) => state.tasks);
+    const { tasks } = useSelector((state) => state.tasks);
 
     const [title, setTitle] = useState();
-    const [taskTitleId, setTaskTitleId] = useState()
 
-
-    // New form and edit form refs
-    const newTaskForm = useRef();
-    const editTaskForm = useRef();
 
 
     // Edit Task
@@ -59,7 +41,15 @@ const Tasks = () => {
 
     // Calendar
     const [showCalendar, setShowCalendar] = useState(false);
+
     const [date, setDate] = useState(new Date());
+
+    const taskDate = new Date(date).toDateString();
+
+    const taskDay = date.getDate()
+
+    const taskMonth = date.getMonth() + 1
+
 
     const [showModal, setShowModal] = useState(false);
 
@@ -84,10 +74,8 @@ const Tasks = () => {
     useEffect(() => {
         if (handleEdit) {
             setEditId(titleTask?._id)
-            console.log(editId)
 
             setTitle(titleTask?.taskTitle)
-            setTaskTitleId(titleTask?._id)
         }
     }, [editId, tasks]);
 
@@ -144,18 +132,31 @@ const Tasks = () => {
     }
 
 
-    const handleChange = () => {
+    const showCalendarModal = () => {
 
         if (showCalendar === false) {
             setShowCalendar(true)
-        } else {
-            setShowCalendar(false)
         }
 
 
-        console.log(date)
 
     }
+    const handleChange = (e) => {
+
+        setShowCalendar(false)
+
+        setDate(e)
+        console.log(date)
+
+
+    }
+
+    const tasksFiltered = tasks.filter((task) =>
+        task.taskDate === taskDate
+    )
+
+
+
 
 
 
@@ -165,7 +166,7 @@ const Tasks = () => {
             <div className={styles.container}>
                 <ul>
                     <li>
-                        <button onClick={() => handleChange()}>
+                        <button onClick={() => showCalendarModal()}>
                             <span>Calendário</span>
                             <span>
                                 <CalendarIcon
@@ -177,8 +178,8 @@ const Tasks = () => {
                 <div className={styles.calendar}>
                     <Calendar
                         className={showCalendar ? "" : "hide"}
-                        onChange={setDate}
-                        defaultValue={date}
+                        onClickDay={handleChange}
+                        value={date}
 
                     />
                 </div>
@@ -187,7 +188,55 @@ const Tasks = () => {
             <div>
                 <h2>Tarefas:</h2>
                 <div>
-                    {tasks &&
+                    {handleChange ?
+                        tasks &&
+                        tasks.filter((task) => task.Date === taskDate) &&
+                        tasksFiltered.map((task) => (
+                            <div className={styles.task} key={task._id}>
+                                {task && (
+                                    <p>{task.taskTitle}</p>
+                                )}
+                                {id === userAuth._id ? (
+                                    <div >
+                                        <Edit onClick={() => handleEdit(task._id)} />
+                                        <Trash onClick={() => handleDelete(task._id)} />
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
+                                {showModal && <div id="modal" className="hide">
+                                    <div className={styles.fade}></div>
+                                    <div className={styles.modal}>
+                                        <div>
+                                            <X className={styles.close} onClick={handleCancelEdit} />
+                                        </div>
+                                        <h1>Editar Tarefa</h1>
+                                        <div id="modal" className="hide">
+                                            <form onSubmit={handleUpdate} className={styles.form}>
+                                                <div className={styles.input_container}>
+                                                    <label>Título: </label>
+                                                    <input
+                                                        type="text"
+                                                        name="title"
+                                                        placeholder="Título da tarefa"
+                                                        onChange={(e) => {
+                                                            setTitle(e.target.value)
+                                                        }}
+                                                        value={title || ""}
+                                                    />
+                                                </div>
+                                                {!loading && <input type="submit" value="Editar Task" />}
+                                                {loading && <input type="submit" disabled value="Aguarde..." />}
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>}
+                            </div>
+                        ))
+                        :
+                        tasks &&
                         tasks.map((task) => (
                             <div className={styles.task} key={task._id}>
                                 {task && (
@@ -232,7 +281,8 @@ const Tasks = () => {
                                 </div>}
                             </div>
                         ))}
-                    {tasks.length === 0 && <p>Não há tarefas pendentes...</p>}
+                    {(tasks.length === 0 || tasksFiltered.length === 0) && <p>Não há tarefas do dia <span>{taskDay}</span>/<span>{taskMonth}</span>...</p>}
+
                 </div>
             </div>
         </div>

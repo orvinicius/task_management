@@ -55,7 +55,7 @@ const Dashboard = () => {
     return (
         <div className={styles.container}>
             <div>
-                <p className={styles.p}>Hello, {userAuth.name}!</p>
+                <p className={styles.p}>Hello, {user.name}!</p>
             </div>
 
             <div>

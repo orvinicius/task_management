@@ -18,7 +18,6 @@ const Profile = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [_id, setId] = useState();
 
     // Load user data
     useEffect(() => {
@@ -30,7 +29,6 @@ const Profile = () => {
         if (user) {
             setName(user.name);
             setEmail(user.email);
-            setId(user._id)
         }
     }, [user]);
 
@@ -43,27 +41,21 @@ const Profile = () => {
         };
 
 
-        user.email = email;
+        if (email) {
+            user.email = email;
+        }
 
 
 
-        user.password = password;
+        if (password) {
+            user.password = password;
+        }
 
 
+        console.log(user);
 
-        user._id = _id
 
-
-        // build form data
-        const formData = new FormData();
-
-        const userFormData = Object.keys(user).forEach((key) =>
-            formData.append(key, user[key])
-        );
-
-        formData.append("user", userFormData);
-
-        await dispatch(updateProfile(formData));
+        await dispatch(updateProfile(user));
 
         setTimeout(() => {
             dispatch(resetMessage());
@@ -76,12 +68,13 @@ const Profile = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
+                    name="name"
                     placeholder="Nome"
                     onChange={(e) => setName(e.target.value)}
                     value={name || ""}
                 />
                 <label>
-                    <input type="email" placeholder="E-mail" onChange={(e) => {
+                    <input type="email" name="email" placeholder="E-mail" onChange={(e) => {
                         setEmail(e.target.value)
                         console.log(email)
                     }} value={email || ""} />
@@ -90,6 +83,7 @@ const Profile = () => {
                     <span>Quer alterar sua senha?</span>
                     <input
                         type="password"
+                        name="password"
                         placeholder="Digite sua nova senha..."
                         onChange={(e) => setPassword(e.target.value)}
                         value={password || ""}
