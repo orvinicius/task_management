@@ -83,7 +83,7 @@ export const updateTask = createAsyncThunk(
         const token = thunkAPI.getState().auth.user.token;
 
         const data = await tasksService.updateTask(
-            { taskTitle: taskData.title },
+            taskData,
             taskData.id,
             token,
         );

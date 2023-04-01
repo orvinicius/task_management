@@ -11,12 +11,14 @@ const UserTasks = new Schema({
   },
   taskTime: {
     type: Number,
-    required: true,
   },
   userId: {
     type: mongoose.ObjectId,
   },
   taskDate: {
+    type: String,
+  },
+  taskStatus: {
     type: String,
   },
 });

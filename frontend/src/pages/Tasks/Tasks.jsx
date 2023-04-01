@@ -1,7 +1,7 @@
 import styles from './Tasks.module.css';
 
 // components
-import { Edit, Trash, Calendar as CalendarIcon, X } from 'react-feather';
+import { Edit, Trash, Calendar as CalendarIcon, X, PlusCircle } from 'react-feather';
 import { Calendar } from "react-calendar";
 
 
@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     deleteTask,
     getUserTasks,
+    insertTask,
     resetMessage,
     updateTask
 } from "../../slices/taskSlice";
@@ -39,6 +40,9 @@ const Tasks = () => {
     // Edit Task
     const [editId, setEditId] = useState();
 
+    const status = document.getElementById('status')
+
+
     // Calendar
     const [showCalendar, setShowCalendar] = useState(false);
 
@@ -50,8 +54,14 @@ const Tasks = () => {
 
     const taskMonth = date.getMonth() + 1
 
+    const tasksFiltered = tasks.filter((task) =>
+        task.taskDate === taskDate
+    )
 
-    const [showModal, setShowModal] = useState(false);
+
+    const [editModal, setEditModal] = useState(false);
+    const [insertModal, setInsertModal] = useState(false);
+
 
 
     // Load user data
@@ -87,29 +97,26 @@ const Tasks = () => {
     };
 
 
+    ///////// EDIT TASK ///////////
 
     // Show edit form
     const handleEdit = (id) => {
 
 
-        if (showModal === false) {
-            setShowModal(true)
+        if (editModal === false) {
+            setEditModal(true)
         } else {
-            setShowModal(false)
+            setEditModal(false)
         }
 
         // console.log(id)
 
         setEditId(id)
-
-
-
-
     };
 
-    // Cancel editing
+    //Cancel editing
     const handleCancelEdit = () => {
-        setShowModal(false)
+        setEditModal(false)
     };
 
     // Update task title
@@ -119,23 +126,61 @@ const Tasks = () => {
         const taskData = {
             title: title,
             id: titleTask?._id,
+            status: status.value
+
         };
 
         dispatch(updateTask(taskData));
 
         resetComponentMessage();
-        setShowModal(false);
+        setEditModal(false);
     };
 
-    if (loading) {
-        return <p>Carregando...</p>;
-    }
+    /////// INSERT TASK ///////////////////////////////////
+
+    const handleInsert = (id) => {
 
 
+        if (insertModal === false) {
+            setInsertModal(true)
+        } else {
+            setInsertModal(false)
+        }
+
+    };
+
+    // Cancel inserting task
+    const handleCancelInsert = () => {
+        setInsertModal(false)
+    };
+
+    // insert task 
+    const handleInsertTask = (e) => {
+        e.preventDefault();
+
+        const task = {
+            taskTitle: title,
+            id: titleTask?._id,
+        };
+
+        dispatch(insertTask(task));
+
+        resetComponentMessage();
+
+        setInsertModal(false);
+    };
+
+
+
+    ///////// CALENDAR /////////////////////////////////
     const showCalendarModal = () => {
 
         if (showCalendar === false) {
             setShowCalendar(true)
+        }
+
+        else {
+            setShowCalendar(false)
         }
 
 
@@ -147,34 +192,41 @@ const Tasks = () => {
 
         setDate(e)
         console.log(date)
-
-
     }
 
-    const tasksFiltered = tasks.filter((task) =>
-        task.taskDate === taskDate
-    )
 
 
-
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
 
 
 
     return (
         <div className={styles.tasks}>
-
             <div className={styles.container}>
-                <ul>
-                    <li>
-                        <button onClick={() => showCalendarModal()}>
-                            <span>Calendário</span>
-                            <span>
-                                <CalendarIcon
-                                />
-                            </span>
-                        </button>
-                    </li>
-                </ul>
+                <div className={styles.buttons}>
+                    <ul>
+                        <li>
+                            <button onClick={() => showCalendarModal()}>
+                                <span>
+                                    <CalendarIcon
+                                    />
+                                </span>
+                                <span>Calendário</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={() => handleInsert()}>
+                                <span>
+                                    <PlusCircle
+                                    />
+                                </span>
+                                <span>Inserir Tarefa</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
                 <div className={styles.calendar}>
                     <Calendar
                         className={showCalendar ? "" : "hide"}
@@ -185,7 +237,7 @@ const Tasks = () => {
                 </div>
 
             </div>
-            <div>
+            <div className={styles.taskContainer}>
                 <h2>Tarefas:</h2>
                 <div>
                     {handleChange ?
@@ -193,9 +245,13 @@ const Tasks = () => {
                         tasks.filter((task) => task.Date === taskDate) &&
                         tasksFiltered.map((task) => (
                             <div className={styles.task} key={task._id}>
-                                {task && (
-                                    <p>{task.taskTitle}</p>
-                                )}
+                                <div>
+                                    {task && (
+                                        <p>{task.taskTitle}</p>
+                                    )}
+
+                                    <p>STATUS: {task.taskStatus}</p>
+                                </div>
                                 {id === userAuth._id ? (
                                     <div >
                                         <Edit onClick={() => handleEdit(task._id)} />
@@ -204,7 +260,44 @@ const Tasks = () => {
                                 ) : (
                                     <></>
                                 )}
-                                {showModal && <div id="modal" className="hide">
+
+                                {insertModal && <div id="modal" className={insertModal ? "" : "hide"}>
+                                    <div className={styles.fade}></div>
+                                    <div className={styles.modal}>
+                                        <div>
+                                            <X className={styles.close} onClick={handleCancelInsert} />
+                                        </div>
+                                        <h1>Inserir Tarefa</h1>
+                                        <div id="modal" className="hide">
+                                            <form onSubmit={handleInsertTask} className={styles.form}>
+                                                <div className={styles.input_container}>
+                                                    <label>Título: </label>
+                                                    <input
+                                                        type="text"
+                                                        name="title"
+                                                        placeholder="Título da tarefa"
+                                                        onChange={(e) => {
+                                                            setTitle(e.target.value)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <p>Status</p>
+                                                    <select name="status" id='status'>
+                                                        <option value="Pendente">Pendente</option>
+                                                        <option value="Concluída">Concluída</option>
+                                                    </select>
+                                                </div>
+                                                {!loading && <input type="submit" value="Inserir Task" />}
+                                                {loading && <input type="submit" disabled value="Aguarde..." />}
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>}
+
+                                {editModal && <div id="modal" className="hide">
                                     <div className={styles.fade}></div>
                                     <div className={styles.modal}>
                                         <div>
@@ -224,6 +317,13 @@ const Tasks = () => {
                                                         }}
                                                         value={title || ""}
                                                     />
+                                                </div>
+                                                <div>
+                                                    <p>Status</p>
+                                                    <select name="status" id='status'>
+                                                        <option value="Pendente">Pendente</option>
+                                                        <option value="Concluída">Concluída</option>
+                                                    </select>
                                                 </div>
                                                 {!loading && <input type="submit" value="Editar Task" />}
                                                 {loading && <input type="submit" disabled value="Aguarde..." />}
@@ -250,7 +350,42 @@ const Tasks = () => {
                                 ) : (
                                     <></>
                                 )}
-                                {showModal && <div id="modal" className="hide">
+                                {insertModal && <div id="modal" className={insertModal ? "" : "hide"}>
+                                    <div className={styles.fade}></div>
+                                    <div className={styles.modal}>
+                                        <div>
+                                            <X className={styles.close} onClick={handleCancelInsert} />
+                                        </div>
+                                        <h1>Inserir Tarefa</h1>
+                                        <div id="modal" className="hide">
+                                            <form onSubmit={handleInsertTask} className={styles.form}>
+                                                <div className={styles.input_container}>
+                                                    <label>Título: </label>
+                                                    <input
+                                                        type="text"
+                                                        name="title"
+                                                        placeholder="Título da tarefa"
+                                                        onChange={(e) => {
+                                                            setTitle(e.target.value)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <p>Status</p>
+                                                    <select name="status" id='status'>
+                                                        <option value="Pendente">Pendente</option>
+                                                        <option value="Concluída">Concluída</option>
+                                                    </select>
+                                                </div>
+                                                {!loading && <input type="submit" value="Inserir Task" />}
+                                                {loading && <input type="submit" disabled value="Aguarde..." />}
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>}
+                                {editModal && <div id="modal" className="hide">
                                     <div className={styles.fade}></div>
                                     <div className={styles.modal}>
                                         <div>
@@ -270,6 +405,12 @@ const Tasks = () => {
                                                         }}
                                                         value={title || ""}
                                                     />
+                                                    <div>
+                                                        <select name="status" id='status'>
+                                                            <option value="Pendente">Pendente</option>
+                                                            <option value="Concluída">Concluída</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 {!loading && <input type="submit" value="Editar Task" />}
                                                 {loading && <input type="submit" disabled value="Aguarde..." />}
@@ -282,6 +423,34 @@ const Tasks = () => {
                             </div>
                         ))}
                     {(tasks.length === 0 || tasksFiltered.length === 0) && <p>Não há tarefas do dia <span>{taskDay}</span>/<span>{taskMonth}</span>...</p>}
+                    {insertModal && <div id="modal" className={insertModal ? "" : "hide"}>
+                        <div className={styles.fade}></div>
+                        <div className={styles.modal}>
+                            <div>
+                                <X className={styles.close} onClick={handleCancelInsert} />
+                            </div>
+                            <h1>Inserir Tarefa</h1>
+                            <div id="modal" className="hide">
+                                <form onSubmit={handleInsertTask} className={styles.form}>
+                                    <div className={styles.input_container}>
+                                        <label>Título: </label>
+                                        <input
+                                            type="text"
+                                            name="title"
+                                            placeholder="Título da tarefa"
+                                            onChange={(e) => {
+                                                setTitle(e.target.value)
+                                            }}
+                                        />
+                                    </div>
+                                    {!loading && <input type="submit" value="Inserir Task" />}
+                                    {loading && <input type="submit" disabled value="Aguarde..." />}
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>}
 
                 </div>
             </div>

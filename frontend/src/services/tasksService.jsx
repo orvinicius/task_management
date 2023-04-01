@@ -35,7 +35,7 @@ const getTaskByID = async (id, token) => {
 
 // insert a task
 const addTask = async (data, token) => {
-  const config = requestConfig("POST", data, token, true);
+  const config = requestConfig("POST", data, token);
 
   try {
     const res = await fetch(api + "/tasks", config)

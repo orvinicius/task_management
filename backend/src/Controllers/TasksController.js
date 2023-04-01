@@ -6,7 +6,7 @@ const Task = require("../Models/UserTasks");
 
 // Insert a task with an user related to it
 const insertTask = async (req, res) => {
-  const { taskTitle, taskTime } = req.body;
+  const { taskTitle } = req.body;
 
   const reqUser = req.user;
 
@@ -23,7 +23,7 @@ const insertTask = async (req, res) => {
     taskTitle,
     userId: user._id,
     taskDate,
-    taskTime,
+    taskStatus: "Pendente",
   });
   // if task was created successfully, return data
   if (!newTask) {
