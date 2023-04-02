@@ -206,7 +206,7 @@ input[type="submit"] {
   margin: 0;
   padding-left: 10px;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   text-align: right;
   position: absolute;
   top: 0.9em;
@@ -233,4 +233,7 @@ input[type="submit"] {
 
 .status label {
   margin-right: 7em;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
 }

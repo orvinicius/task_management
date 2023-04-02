@@ -52,14 +52,14 @@ const Tasks = () => {
                 elem.addEventListener("change", function (e) {
                     setStatus(e.target.value)
                 });
-                tasks && tasks.map((task) => {
-                    if (task.taskStatus) {
-                        elem.value = task.taskStatus
-                        console.log(task.taskStatus)
-                    }
-                })
+
             });
+
         }
+
+
+
+
     }, [editModal])
 
 
@@ -130,11 +130,12 @@ const Tasks = () => {
             setEditModal(false)
         }
 
-
-
         // console.log(id)
 
         setEditId(id)
+
+
+
     };
 
     //Cancel editing
@@ -159,9 +160,12 @@ const Tasks = () => {
         setEditModal(false);
     };
 
+
+
+
     /////// INSERT TASK ///////////////////////////////////
 
-    const handleInsert = (id) => {
+    const handleInsert = () => {
 
 
         if (insertModal === false) {
@@ -273,7 +277,6 @@ const Tasks = () => {
                                     {task && (
                                         <p>{task.taskTitle}</p>
                                     )}
-
                                     <p>STATUS: {task.taskStatus}</p>
                                 </div>
                                 {id === userAuth._id ? (
@@ -305,12 +308,13 @@ const Tasks = () => {
                                                         }}
                                                     />
                                                 </div>
-                                                <div>
-                                                    <p>Status</p>
-                                                    <input type="radio" name='status' id='pendente' value='Pendente' />
-                                                    <label htmlFor="pendente">Pendente</label>
-                                                    <input type="radio" name='status' id='concluída' value='Concluída' />
-                                                    <label htmlFor="concluída">Concluída</label>
+                                                <div className={styles.status}>
+                                                    <label htmlFor="pendente">
+                                                        <input type="radio" name='status' id='pendente' value='Pendente' defaultChecked={task.taskStatus === "Pendente" ? true : false} />
+                                                        Pendente</label>
+                                                    <label htmlFor="concluída">
+                                                        <input type="radio" name='status' id='concluída' value='Concluída' defaultChecked={task.taskStatus === "Concluída" ? true : false} />
+                                                        Concluída</label>
                                                 </div>
                                                 {!loading && <input type="submit" value="Inserir Task" />}
                                                 {loading && <input type="submit" disabled value="Aguarde..." />}
@@ -346,10 +350,12 @@ const Tasks = () => {
                                                     <h2>Status</h2>
                                                 </div>
                                                 <div className={styles.status}>
-                                                    <input type="radio" name='status' id='pendente' value='Pendente' />
-                                                    <label htmlFor="pendente">Pendente</label>
-                                                    <input type="radio" name='status' id='concluída' value='Concluída' />
-                                                    <label htmlFor="concluída">Concluída</label>
+                                                    <label htmlFor="pendente">
+                                                        <input type="radio" name='status' id='pendente' value='Pendente' defaultChecked={task.taskStatus === "Pendente" ? true : false} />
+                                                        Pendente</label>
+                                                    <label htmlFor="concluída">
+                                                        <input type="radio" name='status' id='concluída' value='Concluída' defaultChecked={task.taskStatus === "Concluída" ? true : false} />
+                                                        Concluída</label>
                                                 </div>
                                                 {!loading && <input type="submit" value="Salvar Task" />}
                                                 {loading && <input type="submit" disabled value="Aguarde..." />}
@@ -400,10 +406,12 @@ const Tasks = () => {
                                                     <h2>Status</h2>
                                                 </div>
                                                 <div className={styles.status}>
-                                                    <input type="radio" name='status' id='pendente' value='Pendente' />
-                                                    <label htmlFor="pendente">Pendente</label>
-                                                    <input type="radio" name='status' id='concluída' value='Concluída' />
-                                                    <label htmlFor="concluída">Concluída</label>
+                                                    <label htmlFor="pendente">
+                                                        <input type="radio" name='status' id='pendente' value='Pendente' defaultChecked={task.taskStatus === "Pendente" ? true : false} />
+                                                        Pendente</label>
+                                                    <label htmlFor="concluída">
+                                                        <input type="radio" name='status' id='concluída' value='Concluída' defaultChecked={task.taskStatus === "Concluída" ? true : false} />
+                                                        Concluída</label>
                                                 </div>
                                                 {!loading && <input type="submit" value="Inserir Task" />}
                                                 {loading && <input type="submit" disabled value="Aguarde..." />}
@@ -436,10 +444,14 @@ const Tasks = () => {
                                                         <h2>Status</h2>
                                                     </div>
                                                     <div className={styles.status}>
-                                                        <input type="radio" name='status' id='pendente' value='Pendente' />
-                                                        <label htmlFor="pendente">Pendente</label>
-                                                        <input type="radio" name='status' id='concluída' value='Concluída' />
-                                                        <label htmlFor="concluída">Concluída</label>
+
+                                                        <label htmlFor="pendente">
+                                                            <input type="radio" name='status' id='pendente' value='Pendente' defaultChecked={task.taskStatus === "Pendente" ? true : false} />
+                                                            Pendente</label>
+
+                                                        <label htmlFor="concluída">
+                                                            <input type="radio" name='status' id='concluída' value='Concluída' defaultChecked={task.taskStatus === "Concluída" ? true : false} />
+                                                            Concluída</label>
                                                     </div>
                                                 </div>
                                                 {!loading && <input type="submit" value="Salvar Task" />}
