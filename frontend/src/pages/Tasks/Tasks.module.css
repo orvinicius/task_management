@@ -9,6 +9,7 @@
 .tasks h2 {
   display: flex;
   justify-content: center;
+  margin-bottom: 0.2em;
 }
 
 .task {
@@ -130,7 +131,7 @@ input[type="submit"] {
 .modal {
   position: absolute;
   top: -2em;
-  left: -8em;
+  left: -6.6em;
   /* right: 0; */
   margin: 0 auto;
   width: 500px;
@@ -168,6 +169,7 @@ input[type="submit"] {
 .form input {
   padding: 8px 15px;
   margin-top: 0.5em;
+  margin-bottom: 0.2em;
   border-radius: 0;
   border: 1px solid #282c34;
 }
@@ -209,4 +211,26 @@ input[type="submit"] {
   position: absolute;
   top: 0.9em;
   left: 28em;
+}
+
+.close svg {
+  cursor: pointer;
+}
+
+.status {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  align-content: space-around;
+  /* justify-content: space-between; */
+}
+
+.status input[type="radio"] {
+  margin: 5px;
+  padding: 0;
+}
+
+.status label {
+  margin-right: 7em;
 }

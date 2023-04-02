@@ -5,7 +5,7 @@ import tasksService from "../services/tasksService";
 
 const initialState = defineState({
     tasks: [],
-    task: {},
+    task: [{}],
     error: false,
     success: false,
     loading: false,
@@ -92,7 +92,6 @@ export const updateTask = createAsyncThunk(
         if (data.errors) {
             return thunkAPI.rejectWithValue(data.errors[0]);
         }
-
         return data;
     }
 );
@@ -157,7 +156,7 @@ export const taskSlice = createSlice({
             .addCase(deleteTask.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.photo = null;
+                state.task = null;
             })
             .addCase(updateTask.pending, (state) => {
                 state.loading = true;
@@ -169,7 +168,7 @@ export const taskSlice = createSlice({
                 state.error = null;
                 state.tasks.map((task) => {
                     if (task._id === action.payload.task._id) {
-                        return (task.taskTitle = action.payload.task.taskTitle);
+                        return (task.taskTitle = action.payload.task.taskTitle, task.taskStatus = action.payload.task.taskStatus);
                     }
 
                     return task;

@@ -1,17 +1,7 @@
 import "./App.css";
 
 // Route
-import {
-  Navigate,
-  BrowserRouter,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-
-// React Calendar
-
-// import { Calendar } from "react-calendar";
+import { Navigate, BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Hooks
 import { useAuth } from "./hooks/useAuth";
@@ -41,8 +31,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        {/* <Calendar /> */}
-
         <div className="container">
           <Routes>
             <Route

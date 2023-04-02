@@ -24,6 +24,7 @@ const Dashboard = () => {
     const { user: userAuth } = useSelector((state) => state.auth);
     const {
         tasks,
+        task,
         loading: loadingTask,
         error: errorTask,
         message: messageTask,
@@ -73,7 +74,7 @@ const Dashboard = () => {
                             return timeSum + time
                         }) / 60000) % 60)).slice(-2)}:
 
-                        {tasks && ("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
+                        {task && ("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
                             return timeSum + time
                         }) / 1000) % 60)).slice(-2)}
 
