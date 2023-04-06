@@ -80,7 +80,9 @@ input[type="submit"] {
 
 .task p {
   color: #fff;
-  margin-right: 50px;
+  margin: 1em 50px 0 0;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .task svg {
@@ -131,7 +133,7 @@ input[type="submit"] {
 .modal {
   position: absolute;
   top: -2em;
-  left: -6.6em;
+  left: -4.4em;
   /* right: 0; */
   margin: 0 auto;
   width: 500px;
@@ -171,7 +173,12 @@ input[type="submit"] {
   margin-top: 0.5em;
   margin-bottom: 0.2em;
   border-radius: 0;
-  border: 1px solid #282c34;
+  /* border: 1px solid #282c34; */
+  color: #c0c0c0;
+}
+
+.form input::placeholder {
+  color: #c0c0c0;
 }
 
 .form input[type="submit"] {
@@ -194,6 +201,7 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-bottom: 2em;
 }
 
 .input_container label {
@@ -284,4 +292,31 @@ input[type="submit"] {
 
 .mainStatusContainer fieldset {
   text-align: left;
+  margin-bottom: 1.5em;
+  border: 1px solid #231f37;
+}
+
+.mainStatusContainer legend {
+  color: #fff;
+  font-style: oblique;
+}
+
+.statusInfoPending span {
+  background-color: rgb(213, 213, 16);
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.statusInfoFinished span {
+  background-color: rgb(17, 57, 17);
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.statusInfoPending,
+.statusInfoFinished p {
+  font-weight: bold;
+  margin: 1em 50px 0 0;
 }

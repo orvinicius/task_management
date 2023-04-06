@@ -60,11 +60,6 @@ const Navbar = () => {
                                 <Home />
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/timer">
-                                <Clock />
-                            </NavLink>
-                        </li>
                         {user && (
                             <li>
                                 <NavLink to="/dashboard">

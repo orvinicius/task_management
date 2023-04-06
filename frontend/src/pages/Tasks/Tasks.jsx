@@ -44,7 +44,6 @@ const Tasks = () => {
 
 
     const [status, setStatus] = useState("Pendente")
-    const [currentStatus, setCurrentStatus] = useState()
 
 
     useEffect(() => {
@@ -189,6 +188,8 @@ const Tasks = () => {
     const handleInsertTask = (e) => {
         e.preventDefault();
 
+        setStatus("Pendente")
+
         const task = {
             taskTitle: title,
             id: titleTask?._id,
@@ -277,11 +278,11 @@ const Tasks = () => {
                         tasks.filter((task) => task.Date === taskDate) &&
                         tasksFiltered.map((task) => (
                             <div className={styles.task} key={task._id}>
-                                <div>
+                                <div className={task.taskStatus === "Pendente" ? styles.statusInfoPending : styles.statusInfoFinished}>
                                     {task && (
                                         <p>{task.taskTitle}</p>
                                     )}
-                                    <p>STATUS: {task.taskStatus}</p>
+                                    <p>STATUS: <span>{task.taskStatus}</span></p>
                                 </div>
                                 {id === userAuth._id ? (
                                     <div >
@@ -302,7 +303,6 @@ const Tasks = () => {
                                         <div id="modal" className="hide">
                                             <form onSubmit={handleInsertTask} className={styles.form}>
                                                 <div className={styles.input_container}>
-                                                    <label>Título: </label>
                                                     <input
                                                         type="text"
                                                         name="title"
@@ -343,7 +343,7 @@ const Tasks = () => {
                                         <div id="modal" className="hide">
                                             <form onSubmit={handleUpdate} className={styles.form}>
                                                 <div className={styles.input_container}>
-                                                    <label>Título: </label>
+
                                                     <input
                                                         type="text"
                                                         name="title"
@@ -405,7 +405,7 @@ const Tasks = () => {
                                         <div id="modal" className="hide">
                                             <form onSubmit={handleInsertTask} className={styles.form}>
                                                 <div className={styles.input_container}>
-                                                    <label>Título: </label>
+
                                                     <input
                                                         type="text"
                                                         name="title"
@@ -447,7 +447,7 @@ const Tasks = () => {
                                         <div id="modal" className="hide">
                                             <form onSubmit={handleUpdate} className={styles.form}>
                                                 <div className={styles.input_container}>
-                                                    <label>Título: </label>
+
                                                     <input
                                                         type="text"
                                                         name="title"
@@ -494,7 +494,7 @@ const Tasks = () => {
                             <div id="modal" className="hide">
                                 <form onSubmit={handleInsertTask} className={styles.form}>
                                     <div className={styles.input_container}>
-                                        <label>Título: </label>
+
                                         <input
                                             type="text"
                                             name="title"

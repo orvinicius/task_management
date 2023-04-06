@@ -26,7 +26,16 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
-/* input[type="text"],
+input[type="text"],
 input[type="password"] {
   margin: 0;
-} */
+  background: none;
+  border: none;
+  border-bottom: 1px solid #231f37;
+  color: #fff;
+}
+
+input[type="text"],
+input[type="password"]::placeholder {
+  color: #dedede;
+}

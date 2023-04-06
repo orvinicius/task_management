@@ -1,6 +1,10 @@
 import styles from './Dashboard.module.css';
 
-import tasksService from '../../services/tasksService'
+// import tasksService from '../../services/tasksService'
+
+// components
+import { Calendar as CalendarIcon, List } from 'react-feather';
+import { Calendar } from "react-calendar";
 
 // hooks
 import { useEffect, useState } from 'react';
@@ -8,8 +12,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 
 // Redux
-import { getUserDetails } from "../../slices/userSlice";
+// import { getUserDetails } from "../../slices/userSlice";
 import { getUserTasks } from "../../slices/taskSlice";
+
+import PieChart from "highcharts-react-official";
+
+import Highcharts from "highcharts/highstock";
+
 
 const Dashboard = () => {
 
@@ -21,14 +30,25 @@ const Dashboard = () => {
     const dispatch = useDispatch();
 
     const { user, loading } = useSelector((state) => state.user);
-    const { user: userAuth } = useSelector((state) => state.auth);
     const {
         tasks,
-        task,
-        loading: loadingTask,
-        error: errorTask,
-        message: messageTask,
     } = useSelector((state) => state.tasks);
+
+    // Calendar
+    const [showCalendar, setShowCalendar] = useState(false);
+
+    const [date, setDate] = useState(new Date());
+
+    const taskDate = new Date(date).toDateString();
+
+    const taskDay = date.getDate()
+
+    const taskMonth = date.getMonth() + 1
+
+    const tasksFiltered = tasks.filter((task) =>
+        task.taskDate === taskDate
+    )
+
 
 
     // Load user data
@@ -41,12 +61,109 @@ const Dashboard = () => {
     }, [dispatch]);
 
 
+    const showCalendarModal = () => {
 
-    //get tasks time
-    const tasksTime = tasks.map((time) => {
-        return time.taskTime
+        if (showCalendar === false) {
+            setShowCalendar(true)
+        }
 
-    })
+        else {
+            setShowCalendar(false)
+        }
+
+
+
+    }
+    const handleChange = (e) => {
+
+        setShowCalendar(false)
+
+        setDate(e)
+        console.log(date)
+    }
+
+    // Chart
+
+    const tasksPending = handleChange ?
+        tasks.filter((task) => task.Date === taskDate) &&
+        tasksFiltered.map((task) => task.taskStatus === "Pendente") : tasks.filter((task) => task.taskStatus === "Pendente")
+
+    const tasksFinished = handleChange ?
+        tasks.filter((task) => task.Date === taskDate) &&
+        tasksFiltered.map((task) => task.taskStatus === "Concluída") : tasks.filter((task) => task.taskStatus === "Concluída")
+
+
+
+
+
+    const options = {
+        chart: {
+            backgroundColor: null,
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Tarefas',
+            align: 'center',
+            style: {
+                color: "#fff",
+                fontSize: "30px",
+                fontFamily: "roboto",
+                fontWeight: "bold",
+                fontStyle: "italic",
+
+
+            }
+        },
+        series: [
+            {
+                name: 'QTD',
+                colorByPoint: true,
+                data: [
+                    {
+                        name: "pendentes",
+                        y: tasksPending.length,
+                        color: "rgb(213, 213, 16)"
+                    },
+                    {
+                        name: "concluídas",
+                        y: tasksFinished.length,
+                        color: "rgb(17, 57, 17)"
+                    }
+                ],
+                style: { color: "#fff" }
+            },
+        ],
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                borderColor: null,
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+
+            }
+        },
+        legend: {
+            itemStyle: {
+                color: '#fff',
+                fontWeight: 'bold',
+                textTransform: 'uppercase'
+            }
+        },
+        credits: {
+            enabled: false
+        }
+
+    }
+
+
+
+
 
     if (loading) {
         return <p>Carregando...</p>;
@@ -54,44 +171,49 @@ const Dashboard = () => {
 
 
     return (
-        <div className={styles.container}>
-            <div>
-                <p className={styles.p}>Hello, {user.name}!</p>
+
+        <div>
+            <div className={styles.buttons}>
+                <ul>
+                    <li>
+                        <button onClick={() => showCalendarModal()}>
+                            <span>
+                                <CalendarIcon
+                                />
+                            </span>
+                            <span>Calendário</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
-
-            <div>
-                <p className={styles.tag}>Daily Overview </p>
+            <div className={styles.calendar}>
+                <Calendar
+                    className={showCalendar ? "" : "hide"}
+                    onClickDay={handleChange}
+                    value={date}
+                />
             </div>
-            <div className={styles.tasks_count}>
-                <div className={styles.clock}>
-                    <img src={require('../../assets/clock-icon.png')} alt="clock icon" />
-                    <span><p>
-                        {tasks && ("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
-                            return timeSum + time
-                        }) / 3600000) % 60)).slice(-2)}:
-
-                        {tasks && ("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
-                            return timeSum + time
-                        }) / 60000) % 60)).slice(-2)}:
-
-                        {task && ("0" + Math.floor((tasksTime.reduce((timeSum, time) => {
-                            return timeSum + time
-                        }) / 1000) % 60)).slice(-2)}
-
-                    </p></span>
+            <div className={styles.container}>
+                <div>
+                    <p className={styles.p}>Hello, {user.name}!</p>
                 </div>
-                <div className={styles.tasks}>
-                    <span><p>{tasks.length}</p></span>
-                    <img src={require('../../assets/task-icon.png')} alt="task icon" />
+
+                <div className={styles.tag}>
+                    <p>Daily Overview </p>
+                </div>
+                <div className={styles.tasks_count}>
+                    <div className={styles.tasks}>
+                        <a href="/tasks">
+                            <span><p>{tasks.length}</p></span>
+                            <List />
+                        </a>
+                    </div>
+                </div>
+                <div className={styles.graphic_container}>
+                    <PieChart highcharts={Highcharts} options={options} />
                 </div>
             </div>
-            <div className={styles.graphic_container}>
-                <div className={styles.graphic}></div>
-            </div>
-            <div className={styles.newTask}>
-                <button>New Task</button>
-            </div>
-        </div>
+        </div >
     )
 }
 
