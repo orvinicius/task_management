@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <div className={styles.container} >
       <div className={styles.login}>
-        <h2>Time Management</h2>
+        <h2>Task Management</h2>
         <p className="subtitle">Faça o login para gerenciar suas tasks!</p>
       </div>
       <form onSubmit={handleSubmit}>

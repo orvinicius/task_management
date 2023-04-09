@@ -125,6 +125,8 @@ const Tasks = () => {
 
         if (editModal === false) {
             setEditModal(true)
+            setInsertModal(false);
+            setShowCalendar(false)
 
         } else {
             setEditModal(false)
@@ -173,6 +175,8 @@ const Tasks = () => {
 
         if (insertModal === false) {
             setInsertModal(true)
+            setShowCalendar(false)
+            setEditModal(false)
         } else {
             setInsertModal(false)
         }
@@ -210,6 +214,8 @@ const Tasks = () => {
 
         if (showCalendar === false) {
             setShowCalendar(true)
+            setEditModal(false)
+            setInsertModal(false)
         }
 
         else {

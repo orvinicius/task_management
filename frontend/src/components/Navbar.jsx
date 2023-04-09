@@ -42,7 +42,7 @@ const Navbar = () => {
     return (
         <nav className={styles.nav}>
             <div className={styles.title}>
-                <Link to="/tasks" className={styles.link}><p>Time Management</p></Link>
+                <Link to="/tasks" className={styles.link}><p>Task Management</p></Link>
             </div>
             {/* <form id="search-form" onSubmit={handleSearch}>
                 <BsSearch />

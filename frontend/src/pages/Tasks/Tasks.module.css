@@ -113,7 +113,7 @@ input[type="submit"] {
 
 .calendar {
   position: absolute;
-  left: 29.5em;
+  left: 40%;
   top: 4.2em;
   z-index: 1;
 }
@@ -139,7 +139,7 @@ input[type="submit"] {
 .modal {
   position: absolute;
   top: 5em;
-  left: 25em;
+  left: 36.7%;
   /* right: 0; */
   margin: 0 auto;
   width: 500px;
@@ -350,8 +350,8 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   align-content: space-between;
-  position: fixed;
+  position: absolute;
   z-index: 2;
-  top: 5em;
+  top: 0;
   opacity: 0.5;
 }
