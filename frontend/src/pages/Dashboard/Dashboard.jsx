@@ -84,13 +84,9 @@ const Dashboard = () => {
 
     // Chart
 
-    const tasksPending = handleChange ?
-        tasks.filter((task) => task.Date === taskDate) &&
-        tasksFiltered.map((task) => task.taskStatus === "Pendente") : tasks.filter((task) => task.taskStatus === "Pendente")
+    const tasksPending = tasks.filter((task) => task.taskStatus === "Pendente")
 
-    const tasksFinished = handleChange ?
-        tasks.filter((task) => task.Date === taskDate) &&
-        tasksFiltered.map((task) => task.taskStatus === "Concluída") : tasks.filter((task) => task.taskStatus === "Concluída")
+    const tasksFinished = tasks.filter((task) => task.taskStatus === "Concluída")
 
 
 
@@ -123,12 +119,12 @@ const Dashboard = () => {
                 colorByPoint: true,
                 data: [
                     {
-                        name: "pendentes",
+                        name: "Pendentes",
                         y: tasksPending.length,
                         color: "rgb(213, 213, 16)"
                     },
                     {
-                        name: "concluídas",
+                        name: "Concluídas",
                         y: tasksFinished.length,
                         color: "rgb(17, 57, 17)"
                     }
@@ -173,33 +169,13 @@ const Dashboard = () => {
     return (
 
         <div>
-            <div className={styles.buttons}>
-                <ul>
-                    <li>
-                        <button onClick={() => showCalendarModal()}>
-                            <span>
-                                <CalendarIcon
-                                />
-                            </span>
-                            <span>Calendário</span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            <div className={styles.calendar}>
-                <Calendar
-                    className={showCalendar ? "" : "hide"}
-                    onClickDay={handleChange}
-                    value={date}
-                />
-            </div>
             <div className={styles.container}>
                 <div>
-                    <p className={styles.p}>Hello, {user.name}!</p>
+                    <p className={styles.p}>Olá, {user.name}!</p>
                 </div>
 
                 <div className={styles.tag}>
-                    <p>Daily Overview </p>
+                    <p>Tasks Overview </p>
                 </div>
                 <div className={styles.tasks_count}>
                     <div className={styles.tasks}>

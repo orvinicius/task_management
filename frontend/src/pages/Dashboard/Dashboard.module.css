@@ -38,7 +38,7 @@ body {
   text-align: center;
   background: #7159c1;
   height: 18px;
-  width: 89px;
+  width: 8em;
   left: 25px;
   top: 103px;
   border-radius: 4px;
@@ -87,7 +87,7 @@ body {
 
 .graphic_container {
   width: 500px;
-  height: 488px;
+  height: 28em;
   padding-top: 2em;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
 }

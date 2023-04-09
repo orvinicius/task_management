@@ -1,5 +1,6 @@
 .container {
-  min-height: 80vh;
+  position: relative;
+  min-height: 100vh;
 }
 
 /* React Calendar Style */

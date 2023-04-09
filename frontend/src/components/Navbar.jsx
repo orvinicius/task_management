@@ -2,7 +2,7 @@ import styles from './Navbar.module.css';
 
 //Components
 import { NavLink, Link } from "react-router-dom";
-import { Home, PieChart, User, Clock } from 'react-feather'
+import { Home, PieChart, User, List } from 'react-feather'
 
 
 // Hooks
@@ -60,6 +60,13 @@ const Navbar = () => {
                                 <Home />
                             </NavLink>
                         </li>
+                        {user && (
+                            <li>
+                                <NavLink to="/tasks">
+                                    < List />
+                                </NavLink>
+                            </li>
+                        )}
                         {user && (
                             <li>
                                 <NavLink to="/dashboard">

@@ -271,27 +271,29 @@ const Tasks = () => {
 
             </div>
             <div className={styles.taskContainer}>
-                <h2>Tarefas:</h2>
-                <div>
+
+                <h2>Tarefas</h2>
+
+                <div className={styles.taskCard}>
                     {handleChange ?
                         tasks &&
                         tasks.filter((task) => task.Date === taskDate) &&
                         tasksFiltered.map((task) => (
                             <div className={styles.task} key={task._id}>
+                                {id === userAuth._id ? (
+                                    <div className={styles.taskIcon}>
+                                        <Trash onClick={() => handleDelete(task._id)} />
+                                        <Edit onClick={() => handleEdit(task._id)} />
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
                                 <div className={task.taskStatus === "Pendente" ? styles.statusInfoPending : styles.statusInfoFinished}>
                                     {task && (
                                         <p>{task.taskTitle}</p>
                                     )}
                                     <p>STATUS: <span>{task.taskStatus}</span></p>
                                 </div>
-                                {id === userAuth._id ? (
-                                    <div >
-                                        <Edit onClick={() => handleEdit(task._id)} />
-                                        <Trash onClick={() => handleDelete(task._id)} />
-                                    </div>
-                                ) : (
-                                    <></>
-                                )}
 
                                 {insertModal && <div id="modal" className={insertModal ? "" : "hide"}>
                                     <div className={styles.fade}></div>
