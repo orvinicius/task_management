@@ -517,6 +517,9 @@ const Tasks = () => {
 
                 </div>
             </div>
+            <div className={editModal || insertModal ? styles.antModal : ""}>
+            </div>
+
         </div>
     );
 };
